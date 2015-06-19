@@ -1,0 +1,8 @@
+*.swp
+*.mat
+*.raw
+*.mp3
+*.m4a
+octave-workspace
+experiment/
+
