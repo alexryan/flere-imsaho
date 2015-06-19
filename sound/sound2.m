@@ -1,3 +1,17 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% predict the intensity of music tracks
+% 0 = low intensity
+% 1 = high intensity
+%
+% load the training data
+% build the classifier
+% make predictions against the training data
+% make predictions against test data
+%
+% train2.mat: the training data
+% test2.mat:  the test data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %  Instructions
 %  ------------
@@ -18,34 +32,19 @@
 %% Initialization
 clear ; close all; clc
 
-%% Setup the parameters you will use for this part of the exercise
-input_layer_size  = 1000;  % 20x20 Input Images of Digits
-num_labels = 2;          % 10 labels, from 1 to 10   
-                          % (note that we have mapped "0" to label 10)
-
-%% =========== Part 1: Loading and Visualizing Data =============
-%  We start the exercise by first loading and visualizing the dataset. 
-%  You will be working with a dataset that contains handwritten digits.
-%
-
-% Load Training Data
-fprintf('Loading and Visualizing Data ...\n')
-
+fprintf('Loading da training data ...\n')
 % training data stored in arrays X, y
-%[X y] = prepareTrainingData();
 load('train2.mat');
-
-m = size(X, 1);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
 
 
-%% ============ Compute Cost and Gradient ============
-%  In this part of the exercise, you will implement the cost and gradient
-%  for logistic regression. You neeed to complete the code in
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Compute the cost and gradient for logistic regression. 
 %  costFunction.m
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %  Setup the data matrix appropriately, and add ones for the intercept term
 [m, n] = size(X);
@@ -69,9 +68,10 @@ pause;
 
 
 
-%% ============= Optimizing using fminunc  =============
-%  In this exercise, you will use a built-in function (fminunc) to find the
-%  optimal parameters theta.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Optimize using fmiunc
+% Unse fminunc to find the optimal parameters theta.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %  Set options for fminunc
 options = optimset('GradObj', 'on', 'MaxIter', 400);
@@ -87,8 +87,11 @@ fprintf('Cost at theta found by fminunc: %f\n', cost);
 %fprintf(' %f \n', theta);
 
 
-
-%% ================ Predictions  ================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make Predicitons
+% using the training data
+% i.e. If this doesn't work, something is REALLY broken
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Compute accuracy on our training set
 p = predict(theta, X);
@@ -100,49 +103,37 @@ for i = 1:m
   fprintf('predict: song %d is %d, sigmoid is %f\n', i, p(i), sigmoid(X(i,:))*theta);  
 endfor
 
-
 fprintf('\nProgram paused. Press enter to continue.\n');
 pause;
 
-
-%% ================ Predictions  ================
-
-
-
 fprintf('Train Accuracy: %f\n', mean(double(p == y)) * 100);
+pause;
 
-%% =========== Loading Test Data =============
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Make Predicitons
+% using the test data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 fprintf('Loading Test Data ...\n')
 
-% test data stored in matrix T
-%T = prepareTestData();
-
-
-
-
-
-%%%load('test2.mat');
+% test data stored in matrix A and vector b
+load('test3.mat');
 
 %  Setup the data matrix appropriately, and add ones for the intercept term
-%%%[m, n] = size(T);
+[m, n] = size(A);
 
 % Add intercept term to x and X_test
-%%%T = [ones(m, 1) T];
-
-
+A = [ones(m, 1) A];
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
 
-%%%p = predict(theta, T);
+p = predict(theta, A);
 
-%%%for i = 1:m
-%%%  fprintf('predict: song %d is %d, sigmoid is %f\n', i, p(i), sigmoid(T(i,:))*theta);  
-%%%endfor
+for i = 1:m
+  fprintf('predict: song %d is %d, actual is %d, sigmoid is %f\n', i, p(i), b(i), sigmoid(A(i,:))*theta);  
+endfor
 
-
-
-
+fprintf('Test Accuracy: %f\n', mean(double(p == b)) * 100);
 
 
