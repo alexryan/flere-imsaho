@@ -66,8 +66,6 @@ fprintf('\nProgram paused. Press enter to continue.\n');
 pause;
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Optimize using fmiunc
 % Unse fminunc to find the optimal parameters theta.
