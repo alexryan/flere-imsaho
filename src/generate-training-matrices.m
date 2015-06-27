@@ -4,7 +4,7 @@
 % Pre-requisites:
 %   (1) csv containing list of audio files o be processed and their labels
 %   exists here:
-%     $ALPINE_GIT/machineLearn/data/audio/experiment.labels.csv
+%     $ALPINE_GIT/machineLearn/data/audio/experiment.csv
 %   (2) actual audio files exist here:
 %     $ALPINE_GIT/machineLearn/data/audio/snippets
 %
@@ -25,10 +25,10 @@ cdCommand = ["cd " getenv("ALPINE_GIT") "/machineLearning/data/audio"]
 disp(cdCommand)
 system(cdCommand)
 
-csvFile = [getenv("ALPINE_GIT") "/machineLearning/data/audio/experiment.labels.csv"]
+csvFile = [getenv("ALPINE_GIT") "/machineLearning/data/audio/experiment.csv"]
 disp(csvFile)
 
-path2RawSongFiles =  [getenv("ALPINE_GIT") "/machineLearning/data/audio/full"]
+path2RawSongFiles =  [getenv("ALPINE_GIT") "/machineLearning/data/audio/snippets"]
 
 [songs, y] = textread(csvFile, "%s %f", "delimiter", ",");
 
@@ -37,17 +37,19 @@ path2RawSongFiles =  [getenv("ALPINE_GIT") "/machineLearning/data/audio/full"]
 
 for i = 1:length(songs)
   printf("song=|%s|\n", songs{i,1});
-  raw = [songs{i,1} "mono-sr41000-ss16"]
-  printf("raw=|%s|\n", raw);
-  raw = [path2RawSongFiles "/" raw]
-  raw = [songs{i,1} "mono-sr41000-ss16"]
 
-  %songVector = loadaudio(songVector, 'raw', 16);
-  %X(i,:) = song1(1:1000,1);
+  raw = [songs{i,1} ".mono-sr4000-ss16"]
+  printf("raw=|%s|\n", raw);
+
+  raw = [path2RawSongFiles "/" raw]
+  printf("raw=|%s|\n", raw);
+
+  songVector = loadaudio(raw, 'raw', 16);
+  X(i,:) = songVector(1:1000,1);
 end
 
-%song1 = loadaudio('001-A_Thousand_Years.mono-sr41000-ss16', 'raw', 16);
-%X(1,:) = song1(40001:41000,1);
+printf("SIZE:\n")
+disp(size(X))
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

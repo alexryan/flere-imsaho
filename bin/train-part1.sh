@@ -1,30 +1,24 @@
 #!/bin/bash
 
-
-
 ################################################################################
 # Convert all m4a files to mp3 files. Delete the m4a files.
 ################################################################################
 
-################################################################################
-# Convert all mp3 files to raw format.
-#   $ALPINE_GIT/machineLearning/data/audio/full/${name}.mono-sr-4000-ss8.raw
-################################################################################
+echo 'commence m4a file eradication ...'
 
-if false; then
 cd $ALPINE_GIT/machineLearning/data/audio/full
 
 SAVEIF=$IFS
 IFS=$(echo -en "\n\b")
 
-for file in $(ls *mp3)
+for file in $(ls *m4a)
 do
-  name=${file%%.mp3}
-  sox ${name}.mp3 -c 1 -r 4000 --bits 8 ${name}.mono-sr4000-ss8.raw
+  name=${file%%.m4a}
+  ffmpeg -i ${name}.m4a ${name}.mp3
 done
 
 IFS=$SAVEIFS
-fi
+
 
 ################################################################################
 # Extract multiple short snippets from each raw file
@@ -32,6 +26,8 @@ fi
 # judge its intensity or valence relative to another snippet
 ################################################################################
 
+echo 'snippy snip snip ...'
+
 cd $ALPINE_GIT/machineLearning/data/audio/full
 
 SAVEIF=$IFS
@@ -40,7 +36,7 @@ IFS=$(echo -en "\n\b")
 for file in $(ls *mp3)
 do
   name=${file%%.mp3}
-  sox ${name}.mp3 ../snippets/${name}.3me=${file%%.mp3}0.mp3 trim 30 2
+  sox ${name}.mp3 ../snippets/${name}.30.mp3 trim 30 2
   sox ${name}.mp3 ../snippets/${name}.40.mp3 trim 40 2
   sox ${name}.mp3 ../snippets/${name}.50.mp3 trim 50 2
   sox ${name}.mp3 ../snippets/${name}.60.mp3 trim 60 2
@@ -50,6 +46,26 @@ done
 
 IFS=$SAVEIFS
 
+
+################################################################################
+# Convert all mp3 files to raw format.
+#   $ALPINE_GIT/machineLearning/data/audio/full/${name}.mono-sr-4000-ss8.raw
+################################################################################
+
+echo 'u want it raw? ...'
+
+cd $ALPINE_GIT/machineLearning/data/audio/snippets
+
+SAVEIF=$IFS
+IFS=$(echo -en "\n\b")
+
+for file in $(ls *mp3)
+do
+  name=${file%%.mp3}
+  sox ${name}.mp3 -c 1 -r 4000 --bits 16 ${name}.mono-sr4000-ss16.raw
+done
+
+IFS=$SAVEIFS
 
 
 ################################################################################
