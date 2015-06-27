@@ -26,7 +26,7 @@ fi
 basename="${infile%.*}"
 outfile=$basename.csv
 
-echo "basename:$basename"
+#echo "basename:$basename"
 echo "outfile:$outfile"
 
 # Use REAL newline characters so that unix tools like sed can process the file
@@ -35,11 +35,14 @@ tr '\r' '\n' < $infile > temp1.dat
 # Remove everything on the line other than the filename
 cat temp1.dat | sed s:.*/:: > temp2.dat
 
+# Remove the .mp3 extension
+cat temp2.dat | sed s/\.mp3// > temp3.dat
+
 # Remove the lines that start with #EXT
-cat temp2.dat | sed s/^#EXT.*// > temp3.dat
+cat temp3.dat | sed s/^#EXT.*// > temp4.dat
 
 # Remove all the extra empty lines
-sed  '/^$/d' temp3.dat > $outfile
+sed  '/^$/d' temp4.dat > $outfile
 
 # Clean up temporary files
 rm temp*.dat
