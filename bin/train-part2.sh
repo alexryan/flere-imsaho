@@ -1,4 +1,9 @@
 #!/bin/sh
 
-octave $ALPINE_GIT/machineLearning/src/generate-training-matrices.m
+################################################################################
+# Generate $ALPINE_GIT/machineLearning/data/audio/experiment.csv
+################################################################################
+
+cd $ALPINE_GIT/machineLearning/data/audio
+m3u8-to-csv.sh experiment.m3u8
 
