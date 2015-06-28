@@ -82,7 +82,7 @@ $ touch ~/.octaverc
 Open the file in a text editor and add these lines:
 ```javascript
 setenv ("GNUTERM", "X11")
-% below is optional; changes the prompt to two chevron and gets rid of the long Octave x.x.x >> prompt
+C&#35; below is optional; changes the prompt to two chevron and gets rid of the long Octave x.x.x >> prompt
 PS1('❯❯ ')
 ```
 
@@ -93,8 +93,12 @@ run the "git clone" command.
 For example:
 ```javascript
 $ cd /Users/alexryan/alpine/git
-$ git clone https://alpineresearchsv.unfuddle.com/git/alpineresearchsv_machine-learning/ flere-imsaho
+$ git clone https://github.com/alexryan/flere-imsaho.git flere-imsaho
 ```
+
+This will create a directory containing all of the project files called
+flere-imsaho in the current directory like so:
+/Users/alexryan/alpine/git/flere-imsaho
 
 
 ## Setup the environment variables in your ~/.bash_profile
