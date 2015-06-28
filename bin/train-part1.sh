@@ -6,7 +6,7 @@
 
 echo 'commence m4a file eradication ...'
 
-cd $ALPINE_GIT/machineLearning/data/audio/full
+cd $FLERE_IMSAHO/data/audio/full
 
 SAVEIF=$IFS
 IFS=$(echo -en "\n\b")
@@ -28,7 +28,7 @@ IFS=$SAVEIFS
 
 echo 'snippy snip snip ...'
 
-cd $ALPINE_GIT/machineLearning/data/audio/full
+cd $FLERE_IMSAHO/data/audio/full
 
 SAVEIF=$IFS
 IFS=$(echo -en "\n\b")
@@ -49,12 +49,12 @@ IFS=$SAVEIFS
 
 ################################################################################
 # Convert all mp3 files to raw format.
-#   $ALPINE_GIT/machineLearning/data/audio/full/${name}.mono-sr-4000-ss8.raw
+#   $FLERE_IMSAHO/data/audio/full/${name}.mono-sr-4000-ss8.raw
 ################################################################################
 
 echo 'u want it raw? ...'
 
-cd $ALPINE_GIT/machineLearning/data/audio/snippets
+cd $FLERE_IMSAHO/data/audio/snippets
 
 SAVEIF=$IFS
 IFS=$(echo -en "\n\b")
@@ -82,8 +82,8 @@ IFS=$SAVEIFS
 
 ################################################################################
 # randomly separate the data into training and test data
-# $ALPINE_GIT/machineLearning/sound/training
-# $ALPINE_GIT/machineLearning/sound/test
+# $FLERE_IMSAHO/sound/training
+# $FLERE_IMSAHO/sound/test
 ################################################################################
 
 

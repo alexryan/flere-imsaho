@@ -1,5 +1,5 @@
 
-How to setup the environment on Mac OS X.
+How to setup the environment on Mac OS X Yosemite.
 
 ################################################################################
 # Install the tools:
@@ -70,12 +70,12 @@ PS1('❯❯ ')
 cd to the directory where you want to source to be downloaded and
 run the "git clone" command.
 For example:
-  $cd /Users/alexryan/alpine/git
-  $git clone https://alpineresearchsv.unfuddle.com/git/alpineresearchsv_machine-learning/ machineLearning
+$ cd /Users/alexryan/alpine/git
+$ git clone https://alpineresearchsv.unfuddle.com/git/alpineresearchsv_machine-learning/ flere-imsaho
 
 
 ################################################################################
-# Setup the environment variables:
+# Setup the environment variables in your ~/.bash_profile
 ################################################################################
 
 (1) Add environment variables to your ~/.bash_profile:
@@ -130,35 +130,14 @@ $ ls -lF $FLERE_IMSAHO/data/audio/snippets
 # Kewwwwwwllllll eh?
 #
 # We need to extract just the sorted list of MP3 files from it into a csv file.
-# Do that by running the "m3u8-to-csv.sh" shell script:
+# Do that by running the shell script:
 ################################################################################
-
-To generate the csv file, run this command:
-$pwd
 $ train-part2.sh 
 
 Here's what you should see after running the command
-$ls -lF $FLERE_IMSAHO/data/audio/experiment.*
--rw-r--r-- 1 alexryan staff  5091 Jun 27 00:09 /Users/alexryan/alpine/git/machineLearning/data/audio/experiment.csv
--rw-r--r-- 1 alexryan staff 25859 Jun 25 16:35 /Users/alexryan/alpine/git/machineLearning/data/audio/experiment.m3u8
 
-$pwd
-/Users/alexryan/alpine/git/machineLearning/data/audio
-$ls -lF
-total 120
--rw-r--r--   1 alexryan staff 25859 Jun 25 16:35 experiment.m3u8
-drwxr-xr-x  58 alexryan staff  1972 Jun 24 15:52 full/
--rwxr-xr-x   1 alexryan staff  1325 Jun 26 08:54 m3u8-to-csv.sh*
-drwxr-xr-x 170 alexryan staff  5780 Jun 24 16:32 snippets/
-$./m3u8-to-csv.sh experiment.m3u8 
-outfile:experiment.csv
-$ls -lF
-total 76
--rw-r--r--   1 alexryan staff  5831 Jun 26 11:23 experiment.csv
--rw-r--r--   1 alexryan staff 25859 Jun 25 16:35 experiment.m3u8
-drwxr-xr-x  58 alexryan staff  1972 Jun 24 15:52 full/
--rwxr-xr-x   1 alexryan staff  1325 Jun 26 08:54 m3u8-to-csv.sh*
-drwxr-xr-x 170 alexryan staff  5780 Jun 24 16:32 snippets/
+$ ls -lF $FLERE_IMSAHO/data/audio/experiment.*
+-rw-r--r-- 1 alexryan staff  5091 Jun 27 00:09 /Users/alexryan/alpine/git/flere-imsaho/data/audio/experiment.csv
   
 
 ################################################################################
@@ -180,8 +159,10 @@ Deva_Premal-Devi_Prayer.60
 # To each song we need to add a "label"
 # currently we are just using a logistic regression algorithm
 # so label each song with a 0 or 1 like so.
-# wherein 0 = low intensity, 
+# 0 = low intensity, 
 # 1 = high intensity
+# This can be done by importing the csv file into a tool like Google Sheets
+# adding a new column with the labels.
 ################################################################################
 $ cat $FLERE_IMSAHO/data/audio/experiment.csv 
 Divinity-Ethereal_Void.30,0

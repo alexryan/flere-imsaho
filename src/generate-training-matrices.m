@@ -13,7 +13,7 @@
 % What you get ...
 %
 % After running this script, a Matlab file will magically appear here:
-%   $ALPINE_GIT/machineLearning/data/matlab/experiment-train.mat' 
+%   $FLERE_IMSAHO/data/matlab/experiment-train.mat' 
 %
 % It will contain 2 matrices: X & y
 % X is an 1000xm matrix, where m = the number of songs.
@@ -27,16 +27,15 @@
 % Pre-requisites:
 %
 %   (1) csv containing list of audio files o be processed and their labels exists here:
-%     $ALPINE_GIT/machineLearn/data/audio/experiment.csv
+%     $FLERE_IMSAHO/data/audio/experiment.csv
 %   (2) actual audio files exist here:
-%     $ALPINE_GIT/machineLearn/data/audio/snippets
-%
+%     $FLERE_IMSAHO/data/audio/snippets
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Did it work???
 % Here's how to find out ...
 %
-$ cd $ALPINE_GIT/machineLearning/data/matlab
+$ cd $FLERE_IMSAHO/data/matlab
 % ls -lF experiment-train.mat
 % octave
 % >> load('experiment-train.mat');
@@ -51,22 +50,35 @@ $ cd $ALPINE_GIT/machineLearning/data/matlab
 %% Initialization
 clear ; close all; clc
 
-%cdCommand = ["cd " getenv("ALPINE_GIT") "/machineLearning/data/audio"]
-%disp(cdCommand)
-%system(cdCommand)
-
-csvFile = [getenv("ALPINE_GIT") "/machineLearning/data/audio/experiment.csv"]
+csvFile = [getenv("FLERE_IMSAHO") "/data/audio/experiment.csv"]
 disp(csvFile)
 
-%matlabFile = [getenv("ALPINE_GIT") "/machineLearning/data/matlab/experiment-train.mat"]
-%disp(matlabFile)
+path2RawSongFiles = [getenv("FLERE_IMSAHO") "/data/audio/snippets"]
+disp(path2RawSongFiles)
 
-path2RawSongFiles = [getenv("ALPINE_GIT") "/machineLearning/data/audio/snippets"]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Loop through the records of the csv file.
+% Each record contains the name of the mp3 file and a label for it, like so:
+%   Divinity-Ethereal_Void.40,0
+%   Divinity-Ethereal_Void.50,0
+%   ...
+%   Pantera-Fucking_Hostile.50,1
+%   Pantera-Fucking_Hostile.60,1
+% Read the name of the audio file in the cell array "songs".
+% Read the label into the vector "y".
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [songs, y] = textread(csvFile, "%s %f", "delimiter", ",");
 
+% Did it work?
 %disp(songs)
 %disp(y)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Now the labels have been read into the vector y.
+% We just need the raw audio data to be extacted from the files
+% and injected into the matrix "X".
+% Do that now.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i = 1:length(songs)
   printf("song=|%s|\n", songs{i,1});
 
@@ -80,9 +92,9 @@ for i = 1:length(songs)
   X(i,:) = songVector(1:1000,1);
 end
 
+% Did it work? Size matters! 
 printf("SIZE:\n")
 disp(size(X))
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % y: label vector
@@ -94,9 +106,7 @@ disp(size(X))
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% This works:
-
-matlabFile = fullfile(getenv("ALPINE_GIT"), "machineLearning/data/matlab", "output2.mat")
+matlabFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "experiment-training.mat")
 disp(matlabFile)
 save(matlabFile, 'X', 'y')
 
