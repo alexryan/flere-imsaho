@@ -124,7 +124,8 @@ Separate the name of the artist and the name of the track with a hyphen.
 Running the following script with extract multiple 2 second snippets from
 these songs in the $FLERE_IMSAHO/data/snippets directory.
 
-```javascript$ cd $FLERE_IMSAHO/bin
+```javascript
+$ cd $FLERE_IMSAHO/bin
 $ ./train-part1.sh
 $ ls -lF $FLERE_IMSAHO/data/audio/snippets
 ```
