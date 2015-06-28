@@ -4,7 +4,7 @@
 The mission of the Flere-Imsaho project is "to enable machines to feel emotions
 as well or better than the average human."
 
-This are of research is known as [Affective Computing](https://en.wikipedia.org/wiki/Affective_computing).
+This area of research is known as [Affective Computing](https://en.wikipedia.org/wiki/Affective_computing).
 
 We believe that software that can accurately feel the shifting emotional state of a
 user will enable a revolutionary new kind of emotionally calibrated user experience
@@ -30,3 +30,5 @@ by which all human emotions can be descibed via 2 measurable variables:
 Our first project involves using machine learning to detect the shifting emotions
 of music via the extraction of (arousal, valence) data during the playing of
 a musical track.
+
+## [Getting Started] (GettingStarted.md)
