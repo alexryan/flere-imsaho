@@ -106,12 +106,12 @@ for i = 1:length(songs)
   if (randomNumber < 80)
     printf("%d goes to the training set\n", i);
     X(trainingIndex,:) = songVector(1:1000,1);
-    y(trainingIndex) = labels(i);
+    y(trainingIndex,1) = labels(i);
     trainingIndex = trainingIndex + 1;
   else
     printf("%d goes to the test set\n", i);
     A(testIndex,:) = songVector(1:1000,1);
-    b(testIndex) = labels(i);
+    b(testIndex,1) = labels(i);
     testIndex = testIndex + 1;
   endif
 
@@ -120,8 +120,10 @@ end
 % Did it work? Size matters! 
 printf("size of training set:\n")
 disp(size(X))
+disp(size(y))
 printf("size of test set:\n")
 disp(size(A))
+disp(size(b))
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Persist the traiing data and test dat to matlab files.

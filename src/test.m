@@ -12,33 +12,15 @@
 % test2.mat:  the test data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%  Instructions
-%  ------------
-% 
-%  This file contains code that helps you get started on the
-%  linear exercise. You will need to complete the following functions 
-%  in this exericse:
-%
-%     lrCostFunction.m (logistic regression cost function)
-%     oneVsAll.m
-%     predictOneVsAll.m
-%     predict.m
-%
-%  For this exercise, you will not need to change any code in this file,
-%  or any other files other than those mentioned above.
-%
-
 %% Initialization
 clear ; close all; clc
 
 fprintf('Loading da training data ...\n')
 % training data stored in arrays X, y
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/train2.mat');
+load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/experiment-training.mat');
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -54,6 +36,9 @@ X = [ones(m, 1) X];
 
 % Initialize fitting parameters
 initial_theta = zeros(n + 1, 1);
+
+printf('X:');
+disp(size(X))
 
 % Compute and display initial cost and gradient
 [cost, grad] = costFunction(initial_theta, X, y);
@@ -115,7 +100,7 @@ pause;
 fprintf('Loading Test Data ...\n')
 
 % test data stored in matrix A and vector b
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/test3.mat');
+load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/experiment-test.mat');
 
 %  Setup the data matrix appropriately, and add ones for the intercept term
 [m, n] = size(A);

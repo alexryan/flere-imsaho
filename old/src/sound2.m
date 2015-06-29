@@ -34,7 +34,7 @@ clear ; close all; clc
 
 fprintf('Loading da training data ...\n')
 % training data stored in arrays X, y
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/train2.mat');
+load('train2.mat');
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
@@ -115,7 +115,7 @@ pause;
 fprintf('Loading Test Data ...\n')
 
 % test data stored in matrix A and vector b
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/test3.mat');
+load('test3.mat');
 
 %  Setup the data matrix appropriately, and add ones for the intercept term
 [m, n] = size(A);

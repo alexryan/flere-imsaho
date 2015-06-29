@@ -227,3 +227,11 @@ Pantera-Fucking_Hostile.80,1
 ```javascript
 $ train-part3.sh
 ```
+
+## Generate the classifier and make some predictions
+
+```javascript
+$ test.sh
+```
+
+How accurate are your predictions?
