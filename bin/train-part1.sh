@@ -1,6 +1,14 @@
 #!/bin/bash
 
 ################################################################################
+# Take multiple 2 second audio clips from every MP3 file in
+# $FLERE_IMSAHO/data/audio/full
+# and place it them in
+# $FLERE_IMSAHO/data/audio/snippets
+# as .raw files.
+################################################################################
+
+################################################################################
 # Convert all m4a files to mp3 files. Delete the m4a files.
 ################################################################################
 
@@ -20,14 +28,16 @@ done
 IFS=$SAVEIFS
 
 
-################################################################################
+###############################################################################
 # Extract multiple short snippets from each raw file
 # These snippets must be long enough that a human can listen to and
 # judge its intensity or valence relative to another snippet
 ################################################################################
 
-echo 'snippy snip snip ...'
+echo 'deleting old audio clips ...'
+rm $FLERE_IMSAHO/data/audio/snippets/*
 
+echo 'generating new audio clips ...'
 cd $FLERE_IMSAHO/data/audio/full
 
 SAVEIF=$IFS
@@ -69,38 +79,13 @@ IFS=$SAVEIFS
 
 
 ################################################################################
-# load all of these snippets into an iTunes playlist
-# where a human will manually order them from low to high intensity
+# echo stats
 ################################################################################
 
+numberOfFullSongs=$(ls -l $FLERE_IMSAHO/data/audio/full | grep '^-.*.mp3' | wc -l)
+numberOfClips=$(ls -l $FLERE_IMSAHO/data/audio/snippets | grep '^-.*.raw' | wc -l)
+echo "numberOfFullSongs = $numberOfFullSongs"
+echo "numberOfClips = $numberOfClips"
 
-################################################################################
-# extract the manually sorted iTunes playlist
-# generate I-numbers from 0 to 1 for all the songs in the training set.
-################################################################################
-
-
-################################################################################
-# randomly separate the data into training and test data
-# $FLERE_IMSAHO/sound/training
-# $FLERE_IMSAHO/sound/test
-################################################################################
-
-
-################################################################################
-# load all the data into octave
-# the raw data for the song snippets go into da matrix
-# the I-number labels go into da vector
-################################################################################
-
-
-################################################################################
-# invoke da magical machine learning algorithm to give birth to a magical classifier
-################################################################################
-
-
-################################################################################
-# now we can use da magical classifier to make prediction on test data. :)
-################################################################################
 
 

@@ -32,7 +32,7 @@ Use homebrew to install sox
 $ brew install sox --with-flac --with-lame
 ```
 
-###x Machine Learning Tools
+### Machine Learning Tools
 octave is used to run the actual machine learning algorithm.
 
 Follow thesse instructions to install octave on yosemite
@@ -86,7 +86,7 @@ $ touch ~/.octaverc
 Open the file in a text editor and add these lines:
 ```javascript
 setenv ("GNUTERM", "X11")
-C&#35; below is optional; changes the prompt to two chevron and gets rid of the long Octave x.x.x >> prompt
+# below is optional; changes the prompt to two chevron and gets rid of the long Octave x.x.x >> prompt
 PS1('❯❯ ')
 ```
 
@@ -125,7 +125,7 @@ $ source ~/.bash_profile
 Now you are ready to go.  
 Put the MP3 files that you want to work with in this directory:  
 ```javascript
-$FLERE_IMSAHO/data/audio
+$FLERE_IMSAHO/data/audio/full
 ```
 Rename them according to this convention:  
 Artist_Name-Title_of_song.mp3  
