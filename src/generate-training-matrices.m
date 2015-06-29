@@ -27,7 +27,7 @@
 % Pre-requisites:
 %
 %   (1) csv containing list of audio files o be processed and their labels exists here:
-%     $FLERE_IMSAHO/data/audio/experiment.csv
+%     $FLERE_IMSAHO/data/audio/experiment.withLabels.csv
 %   (2) actual audio files exist here:
 %     $FLERE_IMSAHO/data/audio/snippets
 %
@@ -54,7 +54,7 @@
 %% Initialization
 clear ; close all; clc
 
-csvFile = [getenv("FLERE_IMSAHO") "/data/audio/experiment.csv"]
+csvFile = [getenv("FLERE_IMSAHO") "/data/audio/experiment.withLabels.csv"]
 %disp(csvFile)
 printf("csvFile=%s\n", csvFile);
 
