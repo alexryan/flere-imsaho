@@ -91,8 +91,11 @@ This sharing economy offers a challenge to companies who have traditionally soug
 
 However, as the pace of innovation continues to accelerate, the shelf life of technological competitive advantage has deteriorated.
 
-Incrasingly companies are discovering that the hoarding the knowledge of innovative minds does not lead to sustained competitive advantage.
+Incrasingly companies are discovering that hoarding the knowledge of innovative minds just does not lead to the kind of sustained competitive advantage that it used to.
 What does lead to sustained competitive advantage is the abilty to attract and retain the minds that habitually produce such innovations.
+
+And participating in the sharing community is one of the best ways to attract and retain top talent.
+This is why great companies like google spend so much effort in getting the best people, keeping them happy, and continuously sharing their innovations with the community.
 
 We believe that creating an "affective computing ecosystem" of knowledge sharing will conquer the remaining obstacles impeding an explosion of innovation in affective computing and
 create a rising tide that will lift all boats.

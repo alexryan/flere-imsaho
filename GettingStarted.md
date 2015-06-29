@@ -1,8 +1,12 @@
 
 # Getting Started
 
-How to setup the environment on Mac OS X Yosemite.
+Teach a machine learning algroithm how to recognize the intensity of music.  
+Note: Initially we are just distinguishing between 2 categories of "low intensity" and "high intensity".  
+Next stage is assign a range of intensity values (called "I-values") between 0 and 1.
 
+
+How to setup the environment on Mac OS X Yosemite.
 
 ## Install the tools:
 
@@ -15,7 +19,7 @@ If you do have it installed, upgrade to the latest version like so:
 $ brew update && brew upgrade
 
 
-## Audio Processing Tools
+### Audio Processing Tools
  ffmpeg & sox are used for audio file conversion.
 
 Use homebrew to install ffmpeg
@@ -28,7 +32,7 @@ Use homebrew to install sox
 $ brew install sox --with-flac --with-lame
 ```
 
-## Machine Learning Tools
+###x Machine Learning Tools
 octave is used to run the actual machine learning algorithm.
 
 Follow thesse instructions to install octave on yosemite
@@ -118,13 +122,15 @@ $ source ~/.bash_profile
 
 
 ## Generate audio files
-Now you are ready to go
-Put the MP3 files that you want to work with in this directory:
+Now you are ready to go.  
+Put the MP3 files that you want to work with in this directory:  
+```javascript
 $FLERE_IMSAHO/data/audio
-Rename them according to this convention:
-Artist_Name-Title_of_song.mp3
-Replace all spaces with underscores.
-Separate the name of the artist and the name of the track with a hyphen.
+```
+Rename them according to this convention:  
+Artist_Name-Title_of_song.mp3  
+Replace all spaces with underscores.  
+Separate the name of the artist and the name of the track with a hyphen.  
 Running the following script with extract multiple 2 second snippets from
 these songs in the $FLERE_IMSAHO/data/snippets directory.
 
@@ -146,24 +152,27 @@ You should see results that look something like this ...
 
 ## Manually sort the audio files by intensity in iTunes
 
-Import these files into an iTunes playlist
-Manually sort them from least intensity to maximum intensity
+Import these files into an iTunes playlist.  
+Listen to each clip and manually sort them from least intensity to maximum intensity.  
 
 ## Extracted sorted audio files from iTunes
 
-When you are done sorting, export the sorted list as an .m3u8 file
-via "File > Library > Export Playlist"
-to this location:
+When you are done sorting, export the sorted list as an m3u8 file  
+(called "experiment.m3u8")  
+via "File > Library > Export Playlist"  
+to this location:  
+```javascript
 $FLERE_IMSAHO/data/audio
+```
 
-Neat trick:
-If you double-click on this file in the finder, your playlist should start
+Neat trick:  
+If you double-click on this .m3u8 file in the finder, your playlist should start
 playing in iTunes.
 Kewwwwwwllllll eh?
 
 ## Generate a CSV list of the sorted audio files and add a tag to each
 
-We need to extract just the sorted list of MP3 files from it into a csv file.
+We need to extract just the sorted list of MP3 files from it into a csv file.  
 Do that by running the shell script:
 
 ```javascript
@@ -175,6 +184,7 @@ Here's what you should see after running the command
 ```javascript
 $ ls -lF $FLERE_IMSAHO/data/audio/experiment.*
 -rw-r--r-- 1 alexryan staff  5091 Jun 27 00:09 /Users/alexryan/alpine/git/flere-imsaho/data/audio/experiment.csv
+-rw-r--r-- 1 alexryan staff 25859 Jun 25 16:35 /Users/alexryan/alpine/git/flere-imsaho/data/audio/experiment.m3u8
  ```
 
 So now we have a sorted list of songs that looks like this ...
@@ -192,11 +202,11 @@ Deva_Premal-Devi_Prayer.50
 Deva_Premal-Devi_Prayer.60
 ```
 
-To each song we need to add a "label"
-currently we are just using a logistic regression algorithm
-so label each song with a 0 or 1 like so.
-0 = low intensity,
-1 = high intensity
+To each song we need to add a "label"  
+currently we are just using a logistic regression algorithm  
+so label each song with a 0 or 1 like so.  
+0 = low intensity,  
+1 = high intensity  
 This can be done by importing the csv file into a tool like Google Sheets
 adding a new column with the labels.
 
@@ -212,7 +222,7 @@ Pantera-Fucking_Hostile.70,1
 Pantera-Fucking_Hostile.80,1
 ```
 
-# Randomly split the data into training and test sets and generate a matlab data file for each
+## Randomly split the data into training and test sets and generate a matlab data file for each
 
 ```javascript
 $ train-part3.sh
