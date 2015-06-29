@@ -79,10 +79,17 @@ IFS=$SAVEIFS
 
 
 ################################################################################
+# Delete any clips that are not FULL clips.
+################################################################################
+
+find -name "$FLERE_IMSAHO/data/audio/snippets*.raw" -size -16092c -delete
+
+
+################################################################################
 # echo stats
 ################################################################################
 
-numberOfFullSongs=$(ls -l $FLERE_IMSAHO/data/audio/full | grep '^-.*.mp3' | wc -l)
+numberOfFullSongs=$(ls -l $FLERE_IMSAHO/data/audio/full | grep '^-.*mp3' | wc -l)
 numberOfClips=$(ls -l $FLERE_IMSAHO/data/audio/snippets | grep '^-.*.raw' | wc -l)
 echo "numberOfFullSongs = $numberOfFullSongs"
 echo "numberOfClips = $numberOfClips"

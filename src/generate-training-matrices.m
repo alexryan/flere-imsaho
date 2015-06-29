@@ -35,7 +35,7 @@
 % Did it work???
 % Here's how to find out ...
 %
-$ cd $FLERE_IMSAHO/data/matlab
+% cd $FLERE_IMSAHO/data/matlab
 % ls -lF experiment-train.mat
 % octave
 % >> load('experiment-train.mat');
@@ -51,10 +51,12 @@ $ cd $FLERE_IMSAHO/data/matlab
 clear ; close all; clc
 
 csvFile = [getenv("FLERE_IMSAHO") "/data/audio/experiment.csv"]
-disp(csvFile)
+%disp(csvFile)
+printf("csvFile=%s\n", csvFile);
 
 path2RawSongFiles = [getenv("FLERE_IMSAHO") "/data/audio/snippets"]
-disp(path2RawSongFiles)
+%disp(path2RawSongFiles)
+printf("path2RawSongFiles=%s\n", path2RawSongFiles);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Loop through the records of the csv file.
@@ -70,8 +72,9 @@ disp(path2RawSongFiles)
 [songs, y] = textread(csvFile, "%s %f", "delimiter", ",");
 
 % Did it work?
-%disp(songs)
-%disp(y)
+printf("contesnts of %s\n", csvFile);
+disp(songs)
+disp(y)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Now the labels have been read into the vector y.
@@ -80,13 +83,14 @@ disp(path2RawSongFiles)
 % Do that now.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i = 1:length(songs)
-  printf("song=|%s|\n", songs{i,1});
+  printf("i=%d\n", i);
+  printf("song=%s\n", songs{i,1});
 
   raw = [songs{i,1} ".mono-sr4000-ss16"]
-  printf("raw=|%s|\n", raw);
+  printf("raw=%s\n", raw);
 
   raw = [path2RawSongFiles "/" raw]
-  printf("raw=|%s|\n", raw);
+  printf("raw=%s\n", raw);
 
   songVector = loadaudio(raw, 'raw', 16);
   X(i,:) = songVector(1:1000,1);
