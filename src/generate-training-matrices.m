@@ -19,9 +19,9 @@
 % X is an 1000xm matrix, where m = the number of songs.
 % X contains a sample of the song wave.
 % y is an mx1 vector which contains a label for each of the songs in the training set.
-% Currently, there are 2 labels: 0 and 1
-% 0 = low intensity
-% 1 = high intensity
+% Currently, there are 2 labels: 1 and 2
+% 1 = low intensity
+% 2 = high intensity
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pre-requisites:
@@ -76,7 +76,7 @@ printf("path2RawSongFiles=%s\n", path2RawSongFiles);
 [songs, labels] = textread(csvFile, "%s %f", "delimiter", ",");
 
 % Did it work?
-printf("contesnts of %s\n", csvFile);
+printf("contents of %s\n", csvFile);
 disp(songs)
 disp(labels)
 
@@ -105,12 +105,12 @@ for i = 1:length(songs)
 
   if (randomNumber < 80)
     printf("%d goes to the training set\n", i);
-    X(trainingIndex,:) = songVector(1:1000,1);
+    X(trainingIndex,:) = songVector(1:4000,1);
     y(trainingIndex,1) = labels(i);
     trainingIndex = trainingIndex + 1;
   else
     printf("%d goes to the test set\n", i);
-    A(testIndex,:) = songVector(1:1000,1);
+    A(testIndex,:) = songVector(1:4000,1);
     b(testIndex,1) = labels(i);
     testIndex = testIndex + 1;
   endif
