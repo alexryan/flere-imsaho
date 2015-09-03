@@ -9,9 +9,9 @@ hidden_layer_size = 10;    % 25 hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 
 fprintf('Loading da training data ...\n');
-% training data stored in arrays X, y
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/experiment-training.mat');
-m = size(X, 1);
+% training data stored in arrays Xtrain, ytrain
+load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat');
+m = size(Xtrain, 1);
 
 %fprintf('\nRandomly initializing the weights of the neural net...');
 Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
@@ -81,7 +81,7 @@ lambda = 3;
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
-                                   num_labels, X, y, lambda);
+                                   num_labels, Xtrain, ytrain, lambda);
 
 % Now, costFunction is a function that takes in only one argument (the
 % neural network parameters)
@@ -105,7 +105,7 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-matlabWeightsFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "experiment-weights.mat");
+matlabWeightsFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-weights.mat");
 save(matlabWeightsFile, 'Theta1', 'Theta2');
 fprintf("da magical learned parameters have been saved here:\n%s\n", matlabWeightsFile);
 
