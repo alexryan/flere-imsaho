@@ -9,16 +9,14 @@ function [error_train, error_val] = ...
 %       error_val. Then, error_train(i) contains the training error for
 %       i examples (and similarly for error_val(i)).
 
-fprintf(" learningCurve: dimensions of X: %d x %d\n", size(X,1), size(X,2));
-fprintf(" learningCurve: dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
+%fprintf(" learningCurve: dimensions of X: %d x %d\n", size(X,1), size(X,2));
+%fprintf(" learningCurve: dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
 
 % Number of training examples
-%m = size(Xval, 1);
-m = 60;
+m = size(Xval, 1);
+%m = 60;
 
 % You need to return these values correctly
-%error_train = zeros(m, 1);
-%error_val   = zeros(m, 1);
 error_train = zeros(m, 1);
 error_val   = zeros(m, 1);
 
@@ -50,9 +48,6 @@ for i = 1:m
   % The training set will have i examples.
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
-  %[J_i, grad_i] = linearRegCostFunction(X(1:i,:), y(1:i), theta, lambda);
-  %[grad_i] = trainLinearReg(X(1:i,:), y(1:i), lambda);
-  %lambda = 3;
   options = optimset('MaxIter', 10);
   % Create "short hand" for the cost function to be minimized
   costFunction = @(p) nnCostFunction(p, ...
@@ -64,25 +59,15 @@ for i = 1:m
   % neural network parameters)
   [nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
 
-  % Obtain Theta1 and Theta2 back from nn_params
-  %Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
-  %                 hidden_layer_size, (input_layer_size + 1));
-
-  %Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
-  %                 num_labels, (hidden_layer_size + 1));
-
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Calculate the error on the training set
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %error_train(i) = linearRegCostFunction(X(1:i,:), y(1:i), grad_i, 0);
   error_train(i) = nnCostFunction(nn_params, input_layer_size, ...
                                   hidden_layer_size, num_labels, X(1:i,:), y(1:i), 0);
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
   % Calculate the error on the cross validation set
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  %error_val(i) = linearRegCostFunction(Xval(1:i,:), yval(1:i), grad_i, 0);
-  %error_val(i) = linearRegCostFunction(Xval, yval, grad_i, 0);
   error_val(i) = nnCostFunction(nn_params, input_layer_size, ...
                                   hidden_layer_size, num_labels, Xval, yval, 0);
   
