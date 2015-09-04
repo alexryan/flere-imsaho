@@ -28,7 +28,7 @@ input_layer_size  = 4000;  % audio data
 hidden_layer_size = 10;    % hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 
-fprintf('\nRandomly initializing the weights of the neural net...');
+%fprintf('\nRandomly initializing the weights of the neural net...');
 Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 
@@ -69,7 +69,7 @@ for i = 1:m
   % Calculate the error on the cross validation set
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   error_val(i) = nnCostFunction(nn_params, input_layer_size, ...
-                                  hidden_layer_size, num_labels, Xval, yval, 0);
+                                hidden_layer_size, num_labels, Xval, yval, 0);
   
 end
 
