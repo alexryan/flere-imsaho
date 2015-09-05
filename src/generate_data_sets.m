@@ -64,7 +64,8 @@
 %% Initialization
 clear ; close all; clc
 
-csvFile = [getenv("FLERE_IMSAHO") "/data/audio/experiment.withLabels.csv"];
+%csvFile = [getenv("FLERE_IMSAHO") "/data/audio/experiment.withLabels.csv"];
+csvFile = [getenv("FLERE_IMSAHO") "/data/audio/flere-imsaho.csv"];
 %disp(csvFile)
 printf("csvFile=%s\n", csvFile);
 
@@ -114,9 +115,9 @@ for i = 1:length(songs)
   %printf("i=%d\n", i);
   %printf("song=%s\n", songs{i,1});
   raw = [songs{i,1} ".mono-sr4000-ss16"];
-  %printf("raw=%s\n", raw);
+  printf("raw=%s\n", raw);
   raw = [path2RawSongFiles "/" raw];
-  %printf("raw=%s\n", raw);
+  printf("raw=%s\n", raw);
   songVector = loadaudio(raw, 'raw', 16);
   randomNumber = randi([1e1 1e2],1,1);
 

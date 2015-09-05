@@ -33,10 +33,10 @@ function [lambda_vec, error_train, error_val] = ...
   %interval = (max-min)/10;
   %lambda_vec = min:interval:max;
 
-  min = 10000;
-  max = 100000;
-  interval = (max-min)/10;
-  lambda_vec = min:interval:max;
+  %min = 10000;
+  %max = 100000;
+  %interval = (max-min)/10;
+  %lambda_vec = min:interval:max;
 
   min = 100000;
   max = 1000000;
