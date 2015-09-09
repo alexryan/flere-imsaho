@@ -1,4 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Test the Neural Net
+% The OMTM is "test error"
+% If this goes down, then we've done something good.
 %
+% Compute accuracy for the training, cross validation and test sets.
+% Compute error for the training, cross validation and test sets.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Initialization
 clear ; close all; clc
@@ -20,8 +27,8 @@ fprintf(" dimensions of y: %d x %d\n", size(ytrain,1), size(ytrain,2));
 fprintf('\nLoading da cross validation data ...\n')
 % cross validation data stored in matrix Xval and vector yval
 load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-val.mat');
-fprintf(" dimensions of Xtest: %d x %d\n", size(Xval,1), size(Xval,2));
-fprintf(" dimensions of ytest: %d x %d\n", size(yval,1), size(yval,2));
+fprintf(" dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
+fprintf(" dimensions of yval: %d x %d\n", size(yval,1), size(yval,2));
 
 fprintf('\nLoading da test data ...\n')
 % test data stored in matrix Xtest and vector ytest

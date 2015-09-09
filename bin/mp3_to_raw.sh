@@ -27,7 +27,16 @@ cd $FLERE_IMSAHO/data/audio/clips
 SAVEIF=$IFS
 IFS=$(echo -en "\n\b")
 
-for file in $(ls *mp3)
+# -bash: /usr/local/opt/coreutils/libexec/gnubin/ls: Argument list too long
+#
+#for file in $(ls *mp3)
+#do
+#  name=${file%%.mp3}
+#  sox ${name}.mp3 -c 1 -r 4000 --bits 16 ${name}.mono-sr4000-ss16.raw
+#done
+
+FILES=$FLERE_IMSAHO/data/audio/clips/*.mp3
+for file in $FILES
 do
   name=${file%%.mp3}
   sox ${name}.mp3 -c 1 -r 4000 --bits 16 ${name}.mono-sr4000-ss16.raw
@@ -53,7 +62,7 @@ echo "numberOfFullSongs = $numberOfFullSongs"
 echo "numberOfClips = $numberOfClips"
 
 # Do we have ALL of the audio files listed in the CSV?
-echo numberOfSongsInCsv=$($wc -l $FLERE_IMSAHO/data/audio/flere-imsaho.csv)
+numberOfSongsInCsv=$(wc -l $FLERE_IMSAHO/data/audio/flere-imsaho.csv)
 echo "numberOfSongsInCsv = $numberOfSongsInCsv"
 
 
