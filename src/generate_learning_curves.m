@@ -7,43 +7,52 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Initialization
-clear ; close all; clc
+%clear;
+close all; clc
 
-% Load data: 
-% You will have Xtrain, ytrain, Xval, yval in your environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOTE
+% This script requires that the data has already been loaded into global variables
+% for processing.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-fprintf('\nLoading da training data ...\n')
-% training data stored in arrays Xtrain, ytrain 
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat');
+global Xtrain;
+global ytrain;
+global Xval;
+global yval;
+
+%fprintf('\nLoading da training data ...\n')
+%% training data stored in arrays Xtrain, ytrain 
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat');
 fprintf(" dimensions of X: %d x %d\n", size(Xtrain,1), size(Xtrain,2));
 fprintf(" dimensions of y: %d x %d\n", size(ytrain,1), size(ytrain,2));
 
-fprintf('\nLoading da test data ...\n')
-% test data stored in arrays Xval, yval
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-val.mat');
-fprintf(" dimensions of Xtest: %d x %d\n", size(Xval,1), size(Xval,2));
-fprintf(" dimensions of ytest: %d x %d\n", size(yval,1), size(yval,2));
+%fprintf('\nLoading da test data ...\n')
+%% test data stored in arrays Xval, yval
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-val.mat');
+fprintf(" dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
+fprintf(" dimensions of yval: %d x %d\n", size(yval,1), size(yval,2));
 
-lambda = 3;
+lambda = 1;
 
-[error_train, error_val] = ...
+[mvec, error_train, error_val] = ...
     learningCurve([Xtrain], ytrain, ...
                   [Xval], yval, ...
                   lambda);
 
-m = size(Xval,1);
+m = size(error_train);
 
-plot(1:m, error_train, 1:m, error_val);
+plot(mvec, error_train, mvec, error_val);
 title('Learning curve')
 legend('Train', 'Cross Validation')
 xlabel('Number of training examples')
 ylabel('Error')
-axis([0 80 0 5])
+maxX = mvec(size(mvec,2));
+maxY = max(error_val);
+axis([0 maxX 0 maxY])
 
 fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
 for i = 1:m
     fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
 end
-
-
 

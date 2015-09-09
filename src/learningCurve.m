@@ -1,4 +1,4 @@
-function [error_train, error_val] = ...
+function [mvec, error_train, error_val] = ...
     learningCurve(X, y, Xval, yval, lambda)
 %LEARNINGCURVE Generates the train and cross validation set errors needed 
 %to plot a learning curve
@@ -9,12 +9,20 @@ function [error_train, error_val] = ...
 %       error_val. Then, error_train(i) contains the training error for
 %       i examples (and similarly for error_val(i)).
 
-%fprintf(" learningCurve: dimensions of X: %d x %d\n", size(X,1), size(X,2));
-%fprintf(" learningCurve: dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
+% How many samples do we want to take to plot our curves?
+m = 10;
 
-% Number of training examples
-m = size(Xval, 1);
-%m = 60;
+% Let mvec be a vector of size m
+% containing increasing sample sizes to be taken from the training set
+% to train each of m models
+min = 0;
+max = size(Xval, 1);
+interval = (max-min)/m;
+mvec = 1:interval:max;
+
+fprintf("size(Xval,1) = %d\n", size(Xval,1));
+fprintf("mvec (sample sizes used to generate each error value on the plot)\n");
+disp(mvec');
 
 % You need to return these values correctly
 error_train = zeros(m, 1);
@@ -35,14 +43,15 @@ Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 % Unroll parameters
 initial_nn_params = [Theta1(:) ; Theta2(:)];
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Compute train/cross validation errors using training examples 
 % X(1:i, :) and y(1:i), storing the result in 
 % error_train(i) and error_val(i)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-for i = 1:m
+i = 1;
+for mvecIndex=1:length(mvec)
+  m = mvec(mvecIndex);
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Fit the parameters theta with the training set
   % The training set will have i examples.
@@ -53,7 +62,7 @@ for i = 1:m
   costFunction = @(p) nnCostFunction(p, ...
                                      input_layer_size, ...
                                      hidden_layer_size, ...
-                                     num_labels, X(1:i,:), y(1:i), lambda);
+                                     num_labels, X(1:m,:), y(1:m), lambda);
 
   % Now, costFunction is a function that takes in only one argument (the
   % neural network parameters)
@@ -63,20 +72,15 @@ for i = 1:m
   % Calculate the error on the training set
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   error_train(i) = nnCostFunction(nn_params, input_layer_size, ...
-                                  hidden_layer_size, num_labels, X(1:i,:), y(1:i), 0);
+                                  hidden_layer_size, num_labels, X(1:m,:), y(1:m), 0);
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
   % Calculate the error on the cross validation set
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   error_val(i) = nnCostFunction(nn_params, input_layer_size, ...
                                 hidden_layer_size, num_labels, Xval, yval, 0);
-  
+
+  i = i+1;
 end
-
-
-
-% -------------------------------------------------------------
-
-% =========================================================================
 
 end

@@ -79,4 +79,3 @@ whos
 %fprintf(" dimensions of Theta1: %d x %d\n", size(Theta1,1), size(Theta1,2));
 %fprintf(" dimensions of Theta2: %d x %d\n", size(Theta2,1), size(Theta2,2));
 
-
