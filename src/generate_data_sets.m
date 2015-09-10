@@ -19,7 +19,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Usage:
 %
-% octave generate-training-matrices.m
+% octave generate_data_sets.m
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % What you get ...
@@ -166,13 +166,13 @@ pause;
 
 matlabTrainingFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-train.mat");
 disp(matlabTrainingFile);
-save(matlabTrainingFile, 'Xtrain', 'ytrain');
+save(matlabTrainingFile, 'Xtrain', 'ytrain', '-v6');
 
 matlabValidationFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-val.mat");
 disp(matlabValidationFile);
-save(matlabValidationFile, 'Xval', 'yval');
+save(matlabValidationFile, 'Xval', 'yval', '-v6');
 
 matlabTestFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-test.mat");
 disp(matlabTestFile);
-save(matlabTestFile, 'Xtest', 'ytest');
+save(matlabTestFile, 'Xtest', 'ytest', '-v6');
 
