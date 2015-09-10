@@ -23,10 +23,10 @@ function [lambda_vec, error_train, error_val] = ...
   %interval = (max-min)/10;
   %lambda_vec = min:interval:max;
 
-  %min = 300;
-  %max = 1000;
-  %interval = (max-min)/10;
-  %lambda_vec = min:interval:max;
+  min = 10;
+  max = 1000;
+  interval = (max-min)/10;
+  lambda_vec = min:interval:max;
 
   %min = 1000;
   %max = 10000;
@@ -38,12 +38,10 @@ function [lambda_vec, error_train, error_val] = ...
   %interval = (max-min)/10;
   %lambda_vec = min:interval:max;
 
-  min = 100000;
-  max = 1000000;
-  interval = (max-min)/10;
-  lambda_vec = min:interval:max;
-
-
+  %min = 10;
+  %max = 1000000;
+  %interval = (max-min)/10;
+  %lambda_vec = min:interval:max;
   
 error_train = zeros(length(lambda_vec), 1);
 error_val = zeros(length(lambda_vec), 1);
@@ -72,14 +70,30 @@ input_layer_size  = 4000;  % audio data
 hidden_layer_size = 10;    % hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 
+tic;
+
 % Randomly initialize the weights of the neural net
 Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
+
+vcTime1 = toc;
+fprintf("vcTime1=: %d\n", vcTime1)
+
 % Unroll parameters for fminuncg.
 initial_nn_params = [Theta1(:) ; Theta2(:)];
-% number of iterations for fminuncg?
-options = optimset('MaxIter', 20);
 
+% number of iterations for fminuncg?
+options = optimset('MaxIter', 10);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Loop through the set of values for lambda.
+% On each iteration.
+%   Fit a model with the current value of lambda.
+%   Use this model to compute
+%   (1) training set error and
+%   (2) validation set error.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 for i = 1:length(lambda_vec)
   lambda = lambda_vec(i);
@@ -112,19 +126,6 @@ for i = 1:length(lambda_vec)
   error_val(i) = nnCostFunction(nn_params, input_layer_size, ...
                                 hidden_layer_size, num_labels, Xval, yval, 0);
 
-  %theta = trainLinearReg(X, y, lambda);
-  %error_train(i) = linearRegCostFunction(X, y, theta, 0);
-  %error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
-  
 end
-
-
-
-
-
-
-
-
-% =========================================================================
 
 end

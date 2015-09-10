@@ -1,17 +1,31 @@
 % train the neural net
 
 %% Initialization
-clear ; close all; clc
+close all; clc
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOTE
+% This script requires that the data has already been loaded into global variables
+% for processing.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+global Xtrain;
+global ytrain;
+
+
+fprintf(" dimensions of Xtrain: %d x %d\n", size(Xtrain,1), size(Xtrain,2));
+fprintf(" dimensions of ytrain: %d x %d\n", size(ytrain,1), size(ytrain,2));
+
+%fprintf('Loading da training data ...\n');
+%% training data stored in arrays Xtrain, ytrain
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat');
+m = size(Xtrain, 1);
 
 %% Setup the parameters you will use for this exercise
 input_layer_size  = 4000;  % 20x20 Input Images of Digits
 hidden_layer_size = 10;    % 25 hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 
-fprintf('Loading da training data ...\n');
-% training data stored in arrays Xtrain, ytrain
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat');
-m = size(Xtrain, 1);
 
 %fprintf('\nRandomly initializing the weights of the neural net...');
 Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
@@ -75,8 +89,10 @@ options = optimset('MaxIter', 50);
 %options = optimset('MaxIter', 200);
 
 %lambda = 1;
-lambda = 3;
-lambda = 640000;
+%lambda = 3;
+%lambda = 640000;
+%lambda = 300;
+lambda = 0;
 
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) nnCostFunction(p, ...

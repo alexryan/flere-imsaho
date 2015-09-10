@@ -8,7 +8,39 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Initialization
-clear ; close all; clc
+close all; clc
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOTE
+% This script requires that the data has already been loaded into global variables
+% for processing.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+global Xtrain;
+global ytrain;
+global Xval;
+global yval;
+global Xtest;
+global ytest;
+
+%fprintf('\nLoading da training data ...\n')
+%% training data stored in arrays Xtrain, ytrain 
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat');
+fprintf(" dimensions of X: %d x %d\n", size(Xtrain,1), size(Xtrain,2));
+fprintf(" dimensions of y: %d x %d\n", size(ytrain,1), size(ytrain,2));
+
+%fprintf('\nLoading da test data ...\n')
+%% test data stored in arrays Xval, yval
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-val.mat');
+fprintf(" dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
+fprintf(" dimensions of yval: %d x %d\n", size(yval,1), size(yval,2));
+
+%fprintf('\nLoading da test data ...\n')
+%% test data stored in arrays Xtest, ytest
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-val.mat');
+fprintf(" dimensions of Xtest: %d x %d\n", size(Xtest,1), size(Xtest,2));
+fprintf(" dimensions of ytest: %d x %d\n", size(ytest,1), size(ytest,2));
+
 
 %% Define the architecture of the neural net
 input_layer_size  = 4000;  % 20x20 Input Images of Digits
@@ -16,25 +48,23 @@ hidden_layer_size = 10;    % 25 hidden units
 num_labels = 2;            % 2 labels: {1,2}   
                           % (note that we have mapped "0" to label 10)
 
-printf('Loading data. This could take a while. Chill! Patience is a virtue!\n');
-
-fprintf('\nLoading da training data ...\n')
+%fprintf('\nLoading da training data ...\n')
 % training data stored in matrix Xtrain and vector ytrain
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat');
-fprintf(" dimensions of X: %d x %d\n", size(Xtrain,1), size(Xtrain,2));
-fprintf(" dimensions of y: %d x %d\n", size(ytrain,1), size(ytrain,2));
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat');
+%fprintf(" dimensions of X: %d x %d\n", size(Xtrain,1), size(Xtrain,2));
+%fprintf(" dimensions of y: %d x %d\n", size(ytrain,1), size(ytrain,2));
 
-fprintf('\nLoading da cross validation data ...\n')
+%fprintf('\nLoading da cross validation data ...\n')
 % cross validation data stored in matrix Xval and vector yval
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-val.mat');
-fprintf(" dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
-fprintf(" dimensions of yval: %d x %d\n", size(yval,1), size(yval,2));
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-val.mat');
+%fprintf(" dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
+%fprintf(" dimensions of yval: %d x %d\n", size(yval,1), size(yval,2));
 
-fprintf('\nLoading da test data ...\n')
+%fprintf('\nLoading da test data ...\n')
 % test data stored in matrix Xtest and vector ytest
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-test.mat');
-fprintf(" dimensions of Xtest: %d x %d\n", size(Xtest,1), size(Xtest,2));
-fprintf(" dimensions of ytest: %d x %d\n", size(ytest,1), size(ytest,2));
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-test.mat');
+%fprintf(" dimensions of Xtest: %d x %d\n", size(Xtest,1), size(Xtest,2));
+%fprintf(" dimensions of ytest: %d x %d\n", size(ytest,1), size(ytest,2));
 
 % Load the neural network parameters that were trained in trainNN.m
 % variables Theta1 and Theta2 should now contain the weights
