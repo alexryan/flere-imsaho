@@ -92,7 +92,8 @@ options = optimset('MaxIter', 50);
 %lambda = 3;
 %lambda = 640000;
 %lambda = 300;
-lambda = 0;
+%lambda = 0;
+lambda = 250;
 
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) nnCostFunction(p, ...

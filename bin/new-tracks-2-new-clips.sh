@@ -50,12 +50,49 @@ IFS=$(echo -en "\n\b")
 for file in $(ls *mp3)
 do
   name=${file%%.mp3}
-  sox ${name}.mp3 ../new-clips/${name}.30.mp3 trim 30 2
-  sox ${name}.mp3 ../new-clips/${name}.40.mp3 trim 40 2
-  sox ${name}.mp3 ../new-clips/${name}.50.mp3 trim 50 2
-  sox ${name}.mp3 ../new-clips/${name}.60.mp3 trim 60 2
-  sox ${name}.mp3 ../new-clips/${name}.70.mp3 trim 70 2
-  sox ${name}.mp3 ../new-clips/${name}.80.mp3 trim 80 2
+  sox ${name}.mp3 ../new-clips/${name}.000.mp3 trim 0 2
+  sox ${name}.mp3 ../new-clips/${name}.002.mp3 trim 2 2
+  sox ${name}.mp3 ../new-clips/${name}.004.mp3 trim 4 2
+  sox ${name}.mp3 ../new-clips/${name}.006.mp3 trim 6 2
+  sox ${name}.mp3 ../new-clips/${name}.008.mp3 trim 8 2
+  sox ${name}.mp3 ../new-clips/${name}.010.mp3 trim 10 2
+
+  sox ${name}.mp3 ../new-clips/${name}.012.mp3 trim 12 2
+  sox ${name}.mp3 ../new-clips/${name}.014.mp3 trim 14 2
+  sox ${name}.mp3 ../new-clips/${name}.016.mp3 trim 16 2
+  sox ${name}.mp3 ../new-clips/${name}.018.mp3 trim 18 2
+  sox ${name}.mp3 ../new-clips/${name}.020.mp3 trim 20 2
+
+  sox ${name}.mp3 ../new-clips/${name}.022.mp3 trim 22 2
+  sox ${name}.mp3 ../new-clips/${name}.024.mp3 trim 24 2
+  sox ${name}.mp3 ../new-clips/${name}.026.mp3 trim 26 2
+  sox ${name}.mp3 ../new-clips/${name}.028.mp3 trim 28 2
+  sox ${name}.mp3 ../new-clips/${name}.030.mp3 trim 30 2
+  
+  sox ${name}.mp3 ../new-clips/${name}.032.mp3 trim 32 2
+  sox ${name}.mp3 ../new-clips/${name}.034.mp3 trim 34 2
+  sox ${name}.mp3 ../new-clips/${name}.036.mp3 trim 36 2
+  sox ${name}.mp3 ../new-clips/${name}.038.mp3 trim 38 2
+  
+  sox ${name}.mp3 ../new-clips/${name}.040.mp3 trim 40 2
+  sox ${name}.mp3 ../new-clips/${name}.042.mp3 trim 42 2
+  sox ${name}.mp3 ../new-clips/${name}.044.mp3 trim 44 2
+  sox ${name}.mp3 ../new-clips/${name}.046.mp3 trim 46 2
+  sox ${name}.mp3 ../new-clips/${name}.048.mp3 trim 48 2
+  sox ${name}.mp3 ../new-clips/${name}.050.mp3 trim 50 2
+  
+  sox ${name}.mp3 ../new-clips/${name}.052.mp3 trim 52 2
+  sox ${name}.mp3 ../new-clips/${name}.054.mp3 trim 54 2
+  sox ${name}.mp3 ../new-clips/${name}.056.mp3 trim 56 2
+  sox ${name}.mp3 ../new-clips/${name}.058.mp3 trim 58 2
+  sox ${name}.mp3 ../new-clips/${name}.060.mp3 trim 60 2
+  
+  sox ${name}.mp3 ../new-clips/${name}.062.mp3 trim 62 2
+  sox ${name}.mp3 ../new-clips/${name}.064.mp3 trim 64 2
+  sox ${name}.mp3 ../new-clips/${name}.066.mp3 trim 66 2
+  sox ${name}.mp3 ../new-clips/${name}.068.mp3 trim 68 2
+  sox ${name}.mp3 ../new-clips/${name}.070.mp3 trim 70 2
+
 done
 
 IFS=$SAVEIFS

@@ -6,11 +6,11 @@
 %   Load the data once into global variables in the workspace.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-disp('Contents of workspace:')
-whos
+%disp('Contents of workspace:')
+%whos
 
-disp('Contents of flere-imsaho-train.mat:')
-whos('-file','/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat')
+%disp('Contents of flere-imsaho-train.mat:')
+%whos('-file','/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Load the training data
@@ -29,8 +29,8 @@ for k=1:length(n)
 end
 clear s;
 
-disp('Contents of workspace:')
-whos
+%disp('Contents of workspace:')
+%whos
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,8 +50,8 @@ for k=1:length(n)
 end
 clear s;
 
-disp('Contents of workspace:')
-whos
+%disp('Contents of workspace:')
+%whos
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,5 +72,6 @@ end
 clear s;
 
 disp('Contents of workspace:')
-whos
+whos('global')
+
 

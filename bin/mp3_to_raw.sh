@@ -22,7 +22,7 @@
 
 echo 'u want it raw? ...'
 
-cd $FLERE_IMSAHO/data/audio/clips
+cd $FLERE_IMSAHO/data/audio/new-clips
 
 SAVEIF=$IFS
 IFS=$(echo -en "\n\b")
@@ -35,7 +35,7 @@ IFS=$(echo -en "\n\b")
 #  sox ${name}.mp3 -c 1 -r 4000 --bits 16 ${name}.mono-sr4000-ss16.raw
 #done
 
-FILES=$FLERE_IMSAHO/data/audio/clips/*.mp3
+FILES=$FLERE_IMSAHO/data/audio/new-clips/*.mp3
 for file in $FILES
 do
   name=${file%%.mp3}
@@ -49,7 +49,7 @@ IFS=$SAVEIFS
 # Delete any clips that are not FULL clips.
 ################################################################################
 
-find -name "$FLERE_IMSAHO/data/audio/clips*.raw" -size -16092c -delete
+find -name "$FLERE_IMSAHO/data/audio/new-clips*.raw" -size -16092c -delete
 
 
 ################################################################################
@@ -57,7 +57,7 @@ find -name "$FLERE_IMSAHO/data/audio/clips*.raw" -size -16092c -delete
 ################################################################################
 
 numberOfFullSongs=$(ls -l $FLERE_IMSAHO/data/audio/tracks | grep '^-.*mp3' | wc -l)
-numberOfClips=$(ls -l $FLERE_IMSAHO/data/audio/clips | grep '^-.*.raw' | wc -l)
+numberOfClips=$(ls -l $FLERE_IMSAHO/data/audio/new-clips | grep '^-.*.raw' | wc -l)
 echo "numberOfFullSongs = $numberOfFullSongs"
 echo "numberOfClips = $numberOfClips"
 

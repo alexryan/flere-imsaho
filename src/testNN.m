@@ -87,10 +87,18 @@ fprintf('Test Set Error:           %f\n', test_error);
 % These are important metrics when the data set is skewed.
 % i.e. when we do not have a similar number of examples for each class.
 %
+% Precision measures our ratio of "true positives" to "predicted positives".
+% Higher precision means fewer "false positives".
+%
+% Recall measures our ratio of "true positives" to "actual positives".
+% Higher recall means fewer "false negatives"
+%
 % We WANT
-% High Precision and Low Recall
+% High Precision and High Recall
 % F-Score is the metric which measures our ability to get both
-% The Lower the F-Score the better.
+% The Higher the F-Score the better.
+% The F-Score varies between 0 and 1.
+% We want a value as close to 1 as possible.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 positiveLabel   = 2;

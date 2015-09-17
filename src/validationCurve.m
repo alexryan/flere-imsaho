@@ -13,35 +13,10 @@ function [lambda_vec, error_train, error_val] = ...
   
   %lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10];
   
-  %min = 10;
-  %max = 100;
-  %interval = (max-min)/10;
-  %lambda_vec = min:interval:max;
-
-  %min = 100;
-  %max = 300;
-  %interval = (max-min)/10;
-  %lambda_vec = min:interval:max;
-
-  min = 10;
-  max = 1000;
+  min = 250;
+  max = 350;
   interval = (max-min)/10;
   lambda_vec = min:interval:max;
-
-  %min = 1000;
-  %max = 10000;
-  %interval = (max-min)/10;
-  %lambda_vec = min:interval:max;
-
-  %min = 10000;
-  %max = 100000;
-  %interval = (max-min)/10;
-  %lambda_vec = min:interval:max;
-
-  %min = 10;
-  %max = 1000000;
-  %interval = (max-min)/10;
-  %lambda_vec = min:interval:max;
   
 error_train = zeros(length(lambda_vec), 1);
 error_val = zeros(length(lambda_vec), 1);
