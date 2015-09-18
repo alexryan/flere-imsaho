@@ -37,6 +37,9 @@
 %     $FLERE_IMSAHO/data/audio/experiment.withLabels.csv
 %   (2) actual audio files exist here:
 %     $FLERE_IMSAHO/data/audio/clips
+% This script requires the installation of the io package from octave-forge.
+% >> pkg install -forge io
+% >> pkg list
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Did it work???
@@ -61,17 +64,29 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+pkg load io;
+
 %% Initialization
 clear ; close all; clc
 
-%csvFile = [getenv("FLERE_IMSAHO") "/data/audio/experiment.withLabels.csv"];
-csvFile = [getenv("FLERE_IMSAHO") "/data/audio/flere-imsaho.csv"];
-%disp(csvFile)
-printf("csvFile=%s\n", csvFile);
 
-path2RawSongFiles = [getenv("FLERE_IMSAHO") "/data/audio/clips"];
-%disp(path2RawSongFiles)
-printf("path2RawSongFiles=%s\n", path2RawSongFiles);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Get the full paths to
+% input files & directories
+% and output files
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+csvFile              = [getenv("FLERE_IMSAHO") "/data/audio/flere-imsaho.csv"];
+path2RawSongFiles    = [getenv("FLERE_IMSAHO") "/data/audio/clips"];
+
+trainingSetCsvFile   = [getenv("FLERE_IMSAHO") "/data/matlab/training-set.csv"];
+validationSetCsvFile = [getenv("FLERE_IMSAHO") "/data/matlab/validation-set.csv"];
+testSetCsvFile       = [getenv("FLERE_IMSAHO") "/data/matlab/test-set.csv"];
+
+matlabTrainingFile   = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-train.mat");
+matlabValidationFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-val.mat");
+matlabTestFile       = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-test.mat");
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Loop through the records of the csv file.
@@ -110,13 +125,16 @@ trainingIndex   = 1;
 validationIndex = 1;
 testIndex       = 1;
 
-numberOfClass1InTraining = 0;
-numberOfClass2InTraining = 0;
+numberOfClass1InTraining   = 0;
+numberOfClass2InTraining   = 0;
 numberOfClass1InValidation = 0;
 numberOfClass2InValidation = 0;
-numberOfClass1InTest = 0;
-numberOfClass2InTest = 0;
+numberOfClass1InTest       = 0;
+numberOfClass2InTest       = 0;
 
+trainingSetCsv   = {};
+validationSetCsv = {};
+testSetCsv       = {};
 
 
 for i = 1:length(songs)
@@ -134,19 +152,25 @@ for i = 1:length(songs)
     %printf("%d goes to the training set\n", i);
     Xtrain(trainingIndex,:) = songVector(1:1000,1);
     ytrain(trainingIndex,1) = labels(i);
-    trainingIndex = trainingIndex + 1;
+
+    trainingSetCsv{trainingIndex,1} = songs{i,1};
+    trainingSetCsv{trainingIndex,2} = labels(i);
 
     if (labels(i)==1)
       numberOfClass1InTraining = numberOfClass1InTraining + 1;
     else
       numberOfClass2InTraining = numberOfClass2InTraining + 1;
     end
+
+    trainingIndex = trainingIndex + 1;
     
   elseif (randomNumber > 90)
     %printf("%d goes to the cross validation set\n", i);
     Xval(validationIndex,:) = songVector(1:1000,1);
     yval(validationIndex,1) = labels(i);
-    validationIndex = validationIndex + 1;
+
+    validationSetCsv{validationIndex,1} = songs{i,1};
+    validationSetCsv{validationIndex,2} = labels(i);
 
     if (labels(i)==1)
       numberOfClass1InValidation = numberOfClass1InValidation + 1;
@@ -154,17 +178,23 @@ for i = 1:length(songs)
       numberOfClass2InValidation = numberOfClass2InValidation + 1;
     end
 
+    validationIndex = validationIndex + 1;
+    
   else
     %printf("%d goes to the test set\n", i);
     Xtest(testIndex,:) = songVector(1:1000,1);
     ytest(testIndex,1) = labels(i);
-    testIndex = testIndex + 1;
+
+    testSetCsv{testIndex,1} = songs{i,1};
+    testSetCsv{testIndex,2} = labels(i);
 
     if (labels(i)==1)
       numberOfClass1InTest = numberOfClass1InTest + 1;
     else
       numberOfClass2InTest = numberOfClass2InTest + 1;
     end
+
+    testIndex = testIndex + 1;
     
   endif
 
@@ -188,7 +218,7 @@ fprintf(" number of low intensity samples  = %d\n", numberOfClass1InTest);
 fprintf(" number of high intensity samples = %d\n", numberOfClass2InTest);
 
 
-printf("Paused. Hit Enter to generate the new .mat files.");
+printf("Paused. Hit Enter to generate the new .mat files.\n");
 pause;
 
 
@@ -201,15 +231,31 @@ pause;
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-matlabTrainingFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-train.mat");
-disp(matlabTrainingFile);
 save(matlabTrainingFile, 'Xtrain', 'ytrain', '-v6');
-
-matlabValidationFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-val.mat");
-disp(matlabValidationFile);
 save(matlabValidationFile, 'Xval', 'yval', '-v6');
-
-matlabTestFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-test.mat");
-disp(matlabTestFile);
 save(matlabTestFile, 'Xtest', 'ytest', '-v6');
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Persist the record of exactly which clips were loaded into which data set
+% in which order to CSV files.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+cell2csv(trainingSetCsvFile, trainingSetCsv); 
+cell2csv(validationSetCsvFile, validationSetCsv); 
+cell2csv(testSetCsvFile, testSetCsv); 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Print out the locations of the output files that have been written.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+printf("        inputCsvFile = %s\n", csvFile);
+printf("   path2RawSongFiles = %s\n", path2RawSongFiles);
+
+printf("  trainingSetCsvFile = %s\n", trainingSetCsvFile);
+printf("validationSetCsvFile = %s\n", validationSetCsvFile);
+printf("      testSetCsvFile = %s\n", testSetCsvFile);
+
+printf("  matlabTrainingFile = %s\n", matlabTrainingFile);
+printf("matlabValidationFile = %s\n", matlabValidationFile);
+printf("      matlabTestFile = %s\n", matlabTestFile);
 

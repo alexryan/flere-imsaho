@@ -26,30 +26,6 @@ input_layer_size  = 1000;  % 1 sec clip from song; sampling rate = 1000Hz
 hidden_layer_size = 5;     % 5 hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 
-
-%fprintf('\nRandomly initializing the weights of the neural net...');
-Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
-Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
-
-% Unroll parameters 
-nn_params = [Theta1(:) ; Theta2(:)];
-
-%fprintf('\nFeedforward Using Neural Network ...\n');
-
-% Weight regularization parameter (we set this to 0 here).
-%lambda = 0;
-%J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, ...
-%                   num_labels, X, y, lambda);
-%fprintf(['lambda=0; Cost at parameters (randomly initialized): %f\n'], J);
-
-
-% Weight regularization parameter (we set this to 1 here).
-%lambda = 1;
-%J = nnCostFunction(nn_params, input_layer_size, hidden_layer_size, ...
-%                   num_labels, X, y, lambda);
-%fprintf(['lambda=1; Cost at parameters (randomly initialized): %f\n'], J);
-
-
 %fprintf('\nInitializing Neural Network Parameters ...\n')
 initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
@@ -70,30 +46,10 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 %checkNNGradients(lambda);
 
 
-% Also output the costFunction debugging values
-%lambda = 3;
-%debug_J  = nnCostFunction(nn_params, input_layer_size, ...
-%                          hidden_layer_size, num_labels, X, y, lambda);
-%fprintf(['lambda=3; Cost at parameters (randomly initialized): %f\n'], debug_J);
-
-
-%fprintf('Program paused. Press enter to start training ...\n');
-%pause;
-
-
 % Train the Neural Net
 fprintf('\nTraining the neural net ... \n');
 
-%options = optimset('MaxIter', 20);
-options = optimset('MaxIter', 50);
-%options = optimset('MaxIter', 200);
-
-%lambda = 1;
-%lambda = 3;
-%lambda = 640000;
-%lambda = 300;
-%lambda = 0;
-%lambda = 250;
+options = optimset('MaxIter', 200);
 lambda = 0;
 
 % Create "short hand" for the cost function to be minimized
@@ -113,9 +69,6 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
-
-%fprintf('Program paused. New weights learned. Press enter to save them to a file...\n');
-%pause;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
