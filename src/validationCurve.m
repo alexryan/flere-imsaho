@@ -11,12 +11,12 @@ function [lambda_vec, error_train, error_val] = ...
 
   % Selected values of lambda
   
-  %lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10];
+  lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10];
   
-  min = 250;
-  max = 350;
-  interval = (max-min)/10;
-  lambda_vec = min:interval:max;
+  %min = 0;
+  %max = 100;
+  %interval = (max-min)/10;
+  %lambda_vec = min:interval:max;
   
 error_train = zeros(length(lambda_vec), 1);
 error_val = zeros(length(lambda_vec), 1);
@@ -41,8 +41,8 @@ error_val = zeros(length(lambda_vec), 1);
 % Configure the neural net
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-input_layer_size  = 4000;  % audio data
-hidden_layer_size = 10;    % hidden units
+input_layer_size  = 1000;  % audio data
+hidden_layer_size = 5;    % hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 
 tic;

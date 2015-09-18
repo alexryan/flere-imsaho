@@ -32,9 +32,9 @@ error_val   = zeros(m, 1);
 % Configure the neural net
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-input_layer_size  = 4000;  % audio data
-hidden_layer_size = 10;    % hidden units
-num_labels = 2;            % 2 labels: {1,2}   
+input_layer_size = 1000;  % audio data
+hidden_layer_size = 5;    % hidden units
+num_labels = 2;           % 2 labels: {1,2}   
 
 %fprintf('\nRandomly initializing the weights of the neural net...');
 Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);

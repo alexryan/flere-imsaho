@@ -110,32 +110,62 @@ trainingIndex   = 1;
 validationIndex = 1;
 testIndex       = 1;
 
+numberOfClass1InTraining = 0;
+numberOfClass2InTraining = 0;
+numberOfClass1InValidation = 0;
+numberOfClass2InValidation = 0;
+numberOfClass1InTest = 0;
+numberOfClass2InTest = 0;
+
+
+
 for i = 1:length(songs)
 
   %printf("i=%d\n", i);
   %printf("song=%s\n", songs{i,1});
-  raw = [songs{i,1} ".mono-sr4000-ss16"];
+  raw = [songs{i,1} ".mono-sr1000-ss16"];
   %printf("raw=%s\n", raw);
   raw = [path2RawSongFiles "/" raw];
   printf("raw=%s\n", raw);
   songVector = loadaudio(raw, 'raw', 16);
   randomNumber = randi([1e1 1e2],1,1);
 
-  if (randomNumber < 60)
+  if (randomNumber < 80)
     %printf("%d goes to the training set\n", i);
-    Xtrain(trainingIndex,:) = songVector(1:4000,1);
+    Xtrain(trainingIndex,:) = songVector(1:1000,1);
     ytrain(trainingIndex,1) = labels(i);
     trainingIndex = trainingIndex + 1;
-  elseif (randomNumber > 80)
+
+    if (labels(i)==1)
+      numberOfClass1InTraining = numberOfClass1InTraining + 1;
+    else
+      numberOfClass2InTraining = numberOfClass2InTraining + 1;
+    end
+    
+  elseif (randomNumber > 90)
     %printf("%d goes to the cross validation set\n", i);
-    Xval(validationIndex,:) = songVector(1:4000,1);
+    Xval(validationIndex,:) = songVector(1:1000,1);
     yval(validationIndex,1) = labels(i);
     validationIndex = validationIndex + 1;
+
+    if (labels(i)==1)
+      numberOfClass1InValidation = numberOfClass1InValidation + 1;
+    else
+      numberOfClass2InValidation = numberOfClass2InValidation + 1;
+    end
+
   else
     %printf("%d goes to the test set\n", i);
-    Xtest(testIndex,:) = songVector(1:4000,1);
+    Xtest(testIndex,:) = songVector(1:1000,1);
     ytest(testIndex,1) = labels(i);
     testIndex = testIndex + 1;
+
+    if (labels(i)==1)
+      numberOfClass1InTest = numberOfClass1InTest + 1;
+    else
+      numberOfClass2InTest = numberOfClass2InTest + 1;
+    end
+    
   endif
 
 end
@@ -144,14 +174,21 @@ end
 
 fprintf(" dimensions of Xtrain: %d x %d\n", size(Xtrain,1), size(Xtrain,2));
 fprintf(" dimensions of ytrain: %d x %d\n", size(ytrain,1), size(ytrain,2));
+fprintf(" number of low intensity samples  = %d\n", numberOfClass1InTraining);
+fprintf(" number of high intensity samples = %d\n", numberOfClass2InTraining);
 
 fprintf(" dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
 fprintf(" dimensions of yval: %d x %d\n", size(yval,1), size(yval,2));
+fprintf(" number of low intensity samples  = %d\n", numberOfClass1InValidation);
+fprintf(" number of high intensity samples = %d\n", numberOfClass2InValidation);
 
 fprintf(" dimensions of Xtest: %d x %d\n", size(Xtest,1), size(Xtest,2));
 fprintf(" dimensions of ytest: %d x %d\n", size(ytest,1), size(ytest,2));
+fprintf(" number of low intensity samples  = %d\n", numberOfClass1InTest);
+fprintf(" number of high intensity samples = %d\n", numberOfClass2InTest);
 
-printf("paused");
+
+printf("Paused. Hit Enter to generate the new .mat files.");
 pause;
 
 

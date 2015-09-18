@@ -22,8 +22,8 @@ fprintf(" dimensions of ytrain: %d x %d\n", size(ytrain,1), size(ytrain,2));
 m = size(Xtrain, 1);
 
 %% Setup the parameters you will use for this exercise
-input_layer_size  = 4000;  % 20x20 Input Images of Digits
-hidden_layer_size = 10;    % 25 hidden units
+input_layer_size  = 1000;  % 1 sec clip from song; sampling rate = 1000Hz
+hidden_layer_size = 5;     % 5 hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 
 
@@ -93,7 +93,8 @@ options = optimset('MaxIter', 50);
 %lambda = 640000;
 %lambda = 300;
 %lambda = 0;
-lambda = 250;
+%lambda = 250;
+lambda = 0;
 
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) nnCostFunction(p, ...

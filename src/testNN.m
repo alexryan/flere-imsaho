@@ -33,8 +33,8 @@ fprintf(" dimensions of Xtest: %d x %d\n", size(Xtest,1), size(Xtest,2));
 fprintf(" dimensions of ytest: %d x %d\n", size(ytest,1), size(ytest,2));
 
 %% Define the architecture of the neural net
-input_layer_size  = 4000;  % 20x20 Input Images of Digits
-hidden_layer_size = 10;    % 25 hidden units
+input_layer_size  = 1000;  % song clip; 1 second; 1000 samples per second
+hidden_layer_size = 10;    % 10 hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 
 % Load the neural network parameters that were trained in trainNN.m
@@ -67,8 +67,8 @@ fprintf('Test Set Accuracy:        %f\n', mean(double(pred3 == ytest)) * 100);
 
 % Unroll parameters
 nn_params         = [Theta1(:) ; Theta2(:)];
-input_layer_size  = 4000;  % audio data
-hidden_layer_size = 10;    % hidden units
+input_layer_size  = 1000;  % audio data
+hidden_layer_size = 5;    % hidden units
 num_labels        = 2;     % 2 labels: {1,2}
 
 training_error    = nnCostFunction(nn_params, input_layer_size, ...
@@ -115,11 +115,11 @@ recall    = true_positives / (true_positives + false_negatives);
 
 fscore    = 2 * (precision * recall) / (precision + recall);
 
-fprintf('Number of Predictions:    %f\n', size(pred3,1));
-fprintf('True Positives:           %f\n', true_positives);
-fprintf('True Negatives:           %f\n', true_negatives);
-fprintf('False Positives:          %f\n', false_positives);
-fprintf('False Negatives:          %f\n', false_negatives);
+fprintf('Number of Predictions:    %d\n', size(pred3,1));
+fprintf('True Positives:           %d\n', true_positives);
+fprintf('True Negatives:           %d\n', true_negatives);
+fprintf('False Positives:          %d\n', false_positives);
+fprintf('False Negatives:          %d\n', false_negatives);
 
 fprintf('Precision:                %f\n', precision);
 fprintf('Recall:                   %f\n', recall);
