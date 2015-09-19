@@ -33,7 +33,7 @@ fprintf(" dimensions of Xtest: %d x %d\n", size(Xtest,1), size(Xtest,2));
 fprintf(" dimensions of ytest: %d x %d\n", size(ytest,1), size(ytest,2));
 
 %% Define the architecture of the neural net
-input_layer_size  = 1000;  % song clip; 1 second; 1000 samples per second
+input_layer_size  = 500;   % A one second clip of music with this many samples per second
 hidden_layer_size = 10;    % 10 hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 
@@ -67,8 +67,8 @@ fprintf('Test Set Accuracy:        %f\n', mean(double(pred3 == ytest)) * 100);
 
 % Unroll parameters
 nn_params         = [Theta1(:) ; Theta2(:)];
-input_layer_size  = 1000;  % audio data
-hidden_layer_size = 5;    % hidden units
+input_layer_size  = 500;   % audio data
+hidden_layer_size = 5;     % hidden units
 num_labels        = 2;     % 2 labels: {1,2}
 
 training_error    = nnCostFunction(nn_params, input_layer_size, ...

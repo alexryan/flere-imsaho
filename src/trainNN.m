@@ -22,7 +22,7 @@ fprintf(" dimensions of ytrain: %d x %d\n", size(ytrain,1), size(ytrain,2));
 m = size(Xtrain, 1);
 
 %% Setup the parameters you will use for this exercise
-input_layer_size  = 1000;  % 1 sec clip from song; sampling rate = 1000Hz
+input_layer_size  = 500;  % 1 sec clip from song; sampling rate = 1000Hz
 hidden_layer_size = 5;     % 5 hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 

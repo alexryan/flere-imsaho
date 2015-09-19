@@ -41,7 +41,7 @@ error_val = zeros(length(lambda_vec), 1);
 % Configure the neural net
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-input_layer_size  = 1000;  % audio data
+input_layer_size  = 500;  % audio data
 hidden_layer_size = 5;    % hidden units
 num_labels = 2;            % 2 labels: {1,2}   
 

@@ -141,7 +141,7 @@ for i = 1:length(songs)
 
   %printf("i=%d\n", i);
   %printf("song=%s\n", songs{i,1});
-  raw = [songs{i,1} ".mono-sr1000-ss16"];
+  raw = [songs{i,1} ".mono-sr0500-ss16"];
   %printf("raw=%s\n", raw);
   raw = [path2RawSongFiles "/" raw];
   printf("raw=%s\n", raw);
@@ -150,7 +150,7 @@ for i = 1:length(songs)
 
   if (randomNumber < 80)
     %printf("%d goes to the training set\n", i);
-    Xtrain(trainingIndex,:) = songVector(1:1000,1);
+    Xtrain(trainingIndex,:) = songVector(101:600,1);
     ytrain(trainingIndex,1) = labels(i);
 
     trainingSetCsv{trainingIndex,1} = songs{i,1};
@@ -166,7 +166,7 @@ for i = 1:length(songs)
     
   elseif (randomNumber > 90)
     %printf("%d goes to the cross validation set\n", i);
-    Xval(validationIndex,:) = songVector(1:1000,1);
+    Xval(validationIndex,:) = songVector(101:600,1);
     yval(validationIndex,1) = labels(i);
 
     validationSetCsv{validationIndex,1} = songs{i,1};
@@ -182,7 +182,7 @@ for i = 1:length(songs)
     
   else
     %printf("%d goes to the test set\n", i);
-    Xtest(testIndex,:) = songVector(1:1000,1);
+    Xtest(testIndex,:) = songVector(101:600,1);
     ytest(testIndex,1) = labels(i);
 
     testSetCsv{testIndex,1} = songs{i,1};
@@ -230,6 +230,10 @@ pause;
 %   save '/Users/alexryan/alpine/git/flere-imhaso/data/matlab/flere-imsaho-test.mat' Xtest ytest
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Xtrain = featureNormalize(Xtrain);
+Xval   = featureNormalize(Xval);
+Xtest  = featureNormailize(Xtest);
 
 save(matlabTrainingFile, 'Xtrain', 'ytrain', '-v6');
 save(matlabValidationFile, 'Xval', 'yval', '-v6');

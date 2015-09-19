@@ -36,21 +36,21 @@ IFS=$(echo -en "\n\b")
 #done
 
 # Move new-clips to the clips folder
-FILES=$FLERE_IMSAHO/data/audio/new-clips/*.mp3
-for file in $FILES
-do
-  mv ${file} $FLERE_IMSAHO/data/audio/clips
-done
+#FILES=$FLERE_IMSAHO/data/audio/new-clips/*.mp3
+#for file in $FILES
+#do
+#  mv ${file} $FLERE_IMSAHO/data/audio/clips
+#done
 
 # Remove the old raw files in the new-clips folder
-FILES=$FLERE_IMSAHO/data/audio/new-clips/*-sr4000-ss16.raw
-for file in $FILES
-do
-  rm ${file}
-done
+#FILES=$FLERE_IMSAHO/data/audio/new-clips/*-sr4000-ss16.raw
+#for file in $FILES
+#do
+#  rm ${file}
+#done
 
 # Remove all the raw files in the "clips" folder
-FILES=$FLERE_IMSAHO/data/audio/clips/*-sr4000-ss16.raw
+FILES=$FLERE_IMSAHO/data/audio/clips/*-sr1000-ss16.raw
 for file in $FILES
 do
   rm ${file}
@@ -61,7 +61,7 @@ FILES=$FLERE_IMSAHO/data/audio/clips/*.mp3
 for file in $FILES
 do
   name=${file%%.mp3}
-  sox ${name}.mp3 -c 1 -r 1000 --bits 16 ${name}.mono-sr1000-ss16.raw
+  sox ${name}.mp3 -c 1 -r 500 --bits 16 ${name}.mono-sr0500-ss16.raw
 done
 
 IFS=$SAVEIFS
