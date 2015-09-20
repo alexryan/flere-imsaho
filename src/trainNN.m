@@ -23,8 +23,8 @@ m = size(Xtrain, 1);
 
 %% Setup the parameters you will use for this exercise
 input_layer_size  = 500;  % 1 sec clip from song; sampling rate = 1000Hz
-hidden_layer_size = 5;     % 5 hidden units
-num_labels = 2;            % 2 labels: {1,2}   
+hidden_layer_size = 5;    % number of units in the hidden layer
+num_labels = 2;           % 2 labels: {1,2}   
 
 %fprintf('\nInitializing Neural Network Parameters ...\n')
 initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
@@ -49,8 +49,9 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 % Train the Neural Net
 fprintf('\nTraining the neural net ... \n');
 
-options = optimset('MaxIter', 200);
-lambda = 0;
+options = optimset('MaxIter', 600);
+%lambda=0.0028;
+lambda=3;
 
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) nnCostFunction(p, ...
@@ -60,8 +61,10 @@ costFunction = @(p) nnCostFunction(p, ...
 
 % Now, costFunction is a function that takes in only one argument (the
 % neural network parameters)
+tic;
 [nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
-
+timeToTrain=toc;
+printf("\ntime to train: %f seconds\n", timeToTrain);
 
 % Obtain Theta1 and Theta2 back from nn_params
 Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...

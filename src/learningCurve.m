@@ -32,9 +32,17 @@ error_val   = zeros(m, 1);
 % Configure the neural net
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-input_layer_size  = 500;  % audio data
-hidden_layer_size = 5;    % hidden units
-num_labels = 2;           % 2 labels: {1,2}   
+% We're ONLY loading the weights here so that we can get the current
+% dimensions of the matrices.
+load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-weights.mat');
+
+%input_layer_size  = 500;  % audio data
+%hidden_layer_size = 5;    % hidden units
+%num_labels = 2;           % 2 labels: {1,2}   
+
+input_layer_size  = size(Theta1,2) - 1;
+hidden_layer_size = size(Theta2,2) - 1;
+num_labels        = size(Theta2,1);
 
 %fprintf('\nRandomly initializing the weights of the neural net...');
 Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
@@ -66,8 +74,11 @@ for mvecIndex=1:length(mvec)
 
   % Now, costFunction is a function that takes in only one argument (the
   % neural network parameters)
+  tic;
   [nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
-
+  timeElapsed = toc;
+  printf("\nTime to train: %d seconds\n", timeElapsed);
+  
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Calculate the error on the training set
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -32,11 +32,6 @@ fprintf(" dimensions of yval: %d x %d\n", size(yval,1), size(yval,2));
 fprintf(" dimensions of Xtest: %d x %d\n", size(Xtest,1), size(Xtest,2));
 fprintf(" dimensions of ytest: %d x %d\n", size(ytest,1), size(ytest,2));
 
-%% Define the architecture of the neural net
-input_layer_size  = 500;   % A one second clip of music with this many samples per second
-hidden_layer_size = 10;    % 10 hidden units
-num_labels = 2;            % 2 labels: {1,2}   
-
 % Load the neural network parameters that were trained in trainNN.m
 % variables Theta1 and Theta2 should now contain the weights
 fprintf('\nLoading da magical Neural Network Parameters ...\n')
@@ -60,16 +55,19 @@ fprintf('Test Set Accuracy:        %f\n', mean(double(pred3 == ytest)) * 100);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The OMTM (one metric that matters)
-
 % is "cross valiation error"
 % If this goes DOWN, we celebrate.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Unroll parameters
 nn_params         = [Theta1(:) ; Theta2(:)];
-input_layer_size  = 500;   % audio data
-hidden_layer_size = 5;     % hidden units
-num_labels        = 2;     % 2 labels: {1,2}
+%input_layer_size  = 500;   % audio data
+%hidden_layer_size = 5;     % hidden units
+%num_labels        = 2;     % 2 labels: {1,2}
+
+input_layer_size  = size(Theta1,2) - 1;
+hidden_layer_size = size(Theta2,2) - 1;
+num_labels        = size(Theta2,1);
 
 training_error    = nnCostFunction(nn_params, input_layer_size, ...
                                    hidden_layer_size, num_labels, Xtrain, ytrain, 0);

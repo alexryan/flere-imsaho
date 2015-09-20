@@ -11,48 +11,41 @@ function [lambda_vec, error_train, error_val] = ...
 
   % Selected values of lambda
   
-  lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10];
+lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10];
   
-  %min = 0;
-  %max = 100;
-  %interval = (max-min)/10;
-  %lambda_vec = min:interval:max;
-  
+%min = 0.001;
+%max = 0.01;
+%interval = (max-min)/10;
+%lambda_vec = min:interval:max;
+
+%min = 10;
+%max = 100;
+%interval = (max-min)/10;
+%lambda_vec = min:interval:max;
+
 error_train = zeros(length(lambda_vec), 1);
 error_val = zeros(length(lambda_vec), 1);
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: Fill in this function to return training errors in 
-%               error_train and the validation errors in error_val. The 
-%               vector lambda_vec contains the different lambda parameters 
-%               to use for each calculation of the errors, i.e, 
-%               error_train(i), and error_val(i) should give 
-%               you the errors obtained after training with 
-%               lambda = lambda_vec(i)
-%
-%
-
-  % Compute train / val errors when training linear
-  % regression with regularization parameter lambda
-  % You should store the result in error_train(i)
-  % and error_val(i)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Configure the neural net
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-input_layer_size  = 500;  % audio data
-hidden_layer_size = 5;    % hidden units
-num_labels = 2;            % 2 labels: {1,2}   
+% We're ONLY loading the weights here so that we can get the current
+% dimensions of the matrices.
+load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-weights.mat');
 
-tic;
+%input_layer_size  = 500;  % audio data
+%hidden_layer_size = 5;    % hidden units
+%num_labels = 2;           % 2 labels: {1,2}
+
+input_layer_size  = size(Theta1,2) - 1;
+hidden_layer_size = size(Theta2,2) - 1;
+num_labels        = size(Theta2,1);
 
 % Randomly initialize the weights of the neural net
 Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
-
-vcTime1 = toc;
-fprintf("vcTime1=: %d\n", vcTime1)
 
 % Unroll parameters for fminuncg.
 initial_nn_params = [Theta1(:) ; Theta2(:)];
@@ -87,8 +80,11 @@ for i = 1:length(lambda_vec)
 
   % Now, costFunction is a function that takes in only one argument (the
   % neural network parameters)
+  tic;
   [nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
-
+  timeElapsed = toc;
+  printf("\nTime to train: %d seconds\n", timeElapsed);
+  
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Calculate the error on the training set
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
