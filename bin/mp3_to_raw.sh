@@ -22,7 +22,7 @@
 
 echo 'u want it raw? ...'
 
-cd $FLERE_IMSAHO/data/audio/clips
+cd $FLERE_IMSAHO/data/audio/new-clips
 
 SAVEIF=$IFS
 IFS=$(echo -en "\n\b")
@@ -34,6 +34,8 @@ IFS=$(echo -en "\n\b")
 #  name=${file%%.mp3}
 #  sox ${name}.mp3 -c 1 -r 4000 --bits 16 ${name}.mono-sr4000-ss16.raw
 #done
+
+
 
 # Move new-clips to the clips folder
 #FILES=$FLERE_IMSAHO/data/audio/new-clips/*.mp3
@@ -50,19 +52,19 @@ IFS=$(echo -en "\n\b")
 #done
 
 # Remove all the raw files in the "clips" folder
-FILES=$FLERE_IMSAHO/data/audio/clips/*-sr1000-ss16.raw
-for file in $FILES
-do
-  rm ${file}
-done
+#FILES=$FLERE_IMSAHO/data/audio/clips/*-sr1000-ss16.raw
+#for file in $FILES
+#do
+#  rm ${file}
+#done
 
 # Convert MP3 clips to RAW clips using a 1000Hz sampling rate
-FILES=$FLERE_IMSAHO/data/audio/clips/*.mp3
-for file in $FILES
-do
-  name=${file%%.mp3}
-  sox ${name}.mp3 -c 1 -r 500 --bits 16 ${name}.mono-sr0500-ss16.raw
-done
+#FILES=$FLERE_IMSAHO/data/audio/clips/*.mp3
+#for file in $FILES
+#do
+#  name=${file%%.mp3}
+#  sox ${name}.mp3 -c 1 -r 500 --bits 16 ${name}.mono-sr0500-ss16.raw
+#done
 
 IFS=$SAVEIFS
 

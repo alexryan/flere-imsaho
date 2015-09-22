@@ -64,8 +64,13 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-pkg load io;
+functionDir = [getenv("FLERE_IMSAHO") "/src"];
+fprintf("functionDir = %s\n", functionDir);
 
+addpath (functionDir);
+%path
+
+pkg load io;
 %% Initialization
 clear ; close all; clc
 
@@ -136,7 +141,7 @@ trainingSetCsv   = {};
 validationSetCsv = {};
 testSetCsv       = {};
 
-
+tic;
 for i = 1:length(songs)
 
   %printf("i=%d\n", i);
@@ -199,6 +204,8 @@ for i = 1:length(songs)
   endif
 
 end
+timeElapsed = toc;
+fprintf(" timeElapsed=%d\n", timeElapsed);
 
 % Did it work? Size matters! 
 
@@ -233,7 +240,7 @@ pause;
 
 Xtrain = featureNormalize(Xtrain);
 Xval   = featureNormalize(Xval);
-Xtest  = featureNormailize(Xtest);
+Xtest  = featureNormalize(Xtest);
 
 save(matlabTrainingFile, 'Xtrain', 'ytrain', '-v6');
 save(matlabValidationFile, 'Xval', 'yval', '-v6');

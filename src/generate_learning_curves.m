@@ -33,7 +33,7 @@ fprintf(" dimensions of y: %d x %d\n", size(ytrain,1), size(ytrain,2));
 fprintf(" dimensions of Xval: %d x %d\n", size(Xval,1), size(Xval,2));
 fprintf(" dimensions of yval: %d x %d\n", size(yval,1), size(yval,2));
 
-lambda = 1;
+lambda = 0;
 
 [mvec, error_train, error_val] = ...
     learningCurve([Xtrain], ytrain, ...

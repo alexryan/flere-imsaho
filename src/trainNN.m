@@ -49,9 +49,10 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 % Train the Neural Net
 fprintf('\nTraining the neural net ... \n');
 
-options = optimset('MaxIter', 600);
+options = optimset('MaxIter', 200);
 %lambda=0.0028;
-lambda=3;
+%lambda=3;
+lambda=0;
 
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) nnCostFunction(p, ...
