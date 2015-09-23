@@ -49,7 +49,7 @@ pred2 = predict(Theta1, Theta2, Xval);
 pred3 = predict(Theta1, Theta2, Xtest);
 
 fprintf('Training Set Accuracy:    %f\n', mean(double(pred1 == ytrain)) * 100);
-fprintf('Validation  Set Accuracy: %f\n', mean(double(pred2 == yval)) * 100);
+fprintf('Validation Set Accuracy:  %f\n', mean(double(pred2 == yval)) * 100);
 fprintf('Test Set Accuracy:        %f\n', mean(double(pred3 == ytest)) * 100);
 
 

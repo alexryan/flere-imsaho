@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ################################################################################
-# Clean the audio clips
+# Cleanse the audio clips
 #
-# Run this script BEFORE you import your MP3 files into iTunes
+# Run this after you have generated MP3 and RAW clips
 # to save yourself a world of pain.
 #
 # This script detects raw files that are less than the size they are supposed to be.
@@ -24,7 +24,7 @@ IFS=$(echo -en "\n\b")
 
 
 echo -e "\nRemoving MP3 files of size 0 bytes  ..."
-FILES=$(find -name "*.mp3" -size -1c)
+FILES=$(find -name "*.mp3" -size -418c)
 for file in $FILES
 do
   ls -lF ${file}
@@ -56,8 +56,8 @@ IFS=$SAVEIFS
 numberOfRAWClipsAfter=$(ls -l $clipDir | grep '^-.*.raw' | wc -l)
 numberOfMP3ClipsAfter=$(ls -l $clipDir | grep '^-.*.mp3' | wc -l)
 
-echo "numberOfMP3ClipsBefore = $numberOfMP3ClipsAfter"
-echo "numberOfRAWClipsBefore = $numberOfRAWClipsAfter"
+echo "numberOfMP3ClipsBefore = $numberOfMP3ClipsBefore"
+echo "numberOfRAWClipsBefore = $numberOfRAWClipsBefore"
 echo "numberOfMP3ClipsAfter  = $numberOfMP3ClipsAfter"
 echo "numberOfRAWClipsAfter  = $numberOfRAWClipsAfter"
 

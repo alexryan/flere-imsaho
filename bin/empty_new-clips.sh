@@ -1,22 +1,22 @@
 #!/bin/bash
 
 ################################################################################
-# Clean the audio clips
+# Remove all audio clips in the new-clips directory
 #
-# Run this script BEFORE you import your MP3 files into iTunes
-# to save yourself a world of pain.
+# CAREFUL
 #
-# This script detects raw files that are less than the size they are supposed to be.
-# That means that the MP3 clip used to generate it was too short.
-# Both of these must be deleted.
+# Don't run this until AFTER you have transfered MP3 and RAW clips to the "clips"
+# directory.
 #
 ################################################################################
 
-echo 'emptying the new-clips directory ...'
+echo "emptying the directory: $clipsDir"
 
-numberOfFilesBefore=$(ls -l $FLERE_IMSAHO/data/audio/new-clips | wc -l)
+clipsDir=$FLERE_IMSAHO/data/audio/new-clips
 
-cd $FLERE_IMSAHO/data/audio/new-clips
+numberOfFilesBefore=$(ls -l $clipsDir | wc -l)
+
+cd $clipsDir
 
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
@@ -35,7 +35,7 @@ IFS=$SAVEIFS
 # echo stats
 ################################################################################
 
-numberOfFilesAfter=$(ls -l $FLERE_IMSAHO/data/audio/new-clips | wc -l)
+numberOfFilesAfter=$(ls -l $clipsDir | wc -l)
 echo "numberOfFilesBefore = $numberOfFilesBefore"
 echo "numberOfFilesAfter  = $numberOfFilesAfter"
 #ls -lF $FLERE_IMSAHO/data/audio/new-clips
