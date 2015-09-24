@@ -16,14 +16,11 @@ global ytrain;
 fprintf(" dimensions of Xtrain: %d x %d\n", size(Xtrain,1), size(Xtrain,2));
 fprintf(" dimensions of ytrain: %d x %d\n", size(ytrain,1), size(ytrain,2));
 
-%fprintf('Loading da training data ...\n');
-%% training data stored in arrays Xtrain, ytrain
-%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-train.mat');
 m = size(Xtrain, 1);
 
 %% Setup the parameters you will use for this exercise
 input_layer_size  = 500;  % 1 sec clip from song; sampling rate = 1000Hz
-hidden_layer_size = 5;    % number of units in the hidden layer
+hidden_layer_size = 10;   % number of units in the hidden layer
 num_labels = 2;           % 2 labels: {1,2}   
 
 %fprintf('\nInitializing Neural Network Parameters ...\n')

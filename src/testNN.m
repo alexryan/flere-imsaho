@@ -43,7 +43,6 @@ fprintf(" dimensions of Theta2: %d x %d\n", size(Theta2,1), size(Theta2,2));
 fprintf("\nand the drum roll ... what will the results be?\n");
 pause;
 
-
 pred1 = predict(Theta1, Theta2, Xtrain);
 pred2 = predict(Theta1, Theta2, Xval);
 pred3 = predict(Theta1, Theta2, Xtest);

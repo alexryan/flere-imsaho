@@ -11,17 +11,12 @@ function [lambda_vec, error_train, error_val] = ...
 
   % Selected values of lambda
   
-lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10];
+%lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10];
   
-%min = 0.001;
-%max = 0.01;
-%interval = (max-min)/10;
-%lambda_vec = min:interval:max;
-
-%min = 10;
-%max = 100;
-%interval = (max-min)/10;
-%lambda_vec = min:interval:max;
+min = 1;
+max = 4;
+interval = (max-min)/10;
+lambda_vec = min:interval:max;
 
 error_train = zeros(length(lambda_vec), 1);
 error_val = zeros(length(lambda_vec), 1);
