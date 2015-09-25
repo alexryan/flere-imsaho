@@ -4,6 +4,9 @@
 *.mp3
 *.m4a
 *~
+*.dat
+*.supported
+data/audio/tracks/
 octave-workspace
 experiment/
 
