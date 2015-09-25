@@ -12,16 +12,15 @@ close all; clc
 global Xtrain;
 global ytrain;
 
-
 fprintf(" dimensions of Xtrain: %d x %d\n", size(Xtrain,1), size(Xtrain,2));
 fprintf(" dimensions of ytrain: %d x %d\n", size(ytrain,1), size(ytrain,2));
 
 m = size(Xtrain, 1);
 
 %% Setup the parameters you will use for this exercise
-input_layer_size  = 500;  % 1 sec clip from song; sampling rate = 1000Hz
-hidden_layer_size = 10;   % number of units in the hidden layer
-num_labels = 2;           % 2 labels: {1,2}   
+input_layer_size  = size(Xtrain,2);  % 1 sec clip from song; sampling rate = 1000Hz
+hidden_layer_size = 10;              % number of units in the hidden layer
+num_labels = 2;                      % 2 labels: {1,2}   
 
 %fprintf('\nInitializing Neural Network Parameters ...\n')
 initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
@@ -80,6 +79,6 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 matlabWeightsFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-weights.mat");
-save(matlabWeightsFile, 'Theta1', 'Theta2');
+save(matlabWeightsFile, 'Theta1', 'Theta2', 'v6');
 fprintf("da magical learned parameters have been saved here:\n%s\n", matlabWeightsFile);
 

@@ -10,6 +10,18 @@
 %% Initialization
 close all; clc
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Files that get written ...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% READING ...
+weightsMatLabFile            = [getenv("FLERE_IMSAHO") "/data/matlab/flere-imsaho-weights.mat"];
+% WRITING ...
+testSetFalseNegativesCsvFile = [getenv("FLERE_IMSAHO") "/data/matlab/test-set-false-negatives_indices.csv"];
+testSetFalsePostivesCsvFile  = [getenv("FLERE_IMSAHO") "/data/matlab/test-set-false-positives_indices.csv"];
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NOTE
 % This script requires that the data has already been loaded into global variables
@@ -35,7 +47,9 @@ fprintf(" dimensions of ytest: %d x %d\n", size(ytest,1), size(ytest,2));
 % Load the neural network parameters that were trained in trainNN.m
 % variables Theta1 and Theta2 should now contain the weights
 fprintf('\nLoading da magical Neural Network Parameters ...\n')
-load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-weights.mat');
+
+%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-weights.mat');
+load(weightsMatLabFile);
 fprintf(" dimensions of Theta1: %d x %d\n", size(Theta1,1), size(Theta1,2));
 fprintf(" dimensions of Theta2: %d x %d\n", size(Theta2,1), size(Theta2,2));
 
@@ -104,6 +118,12 @@ true_negatives  = countTrueNegatives(pred3, ytest, positiveLabel);
 false_positives = countFalsePositives(pred3, ytest, positiveLabel);
 false_negatives = countFalseNegatives(pred3, ytest, positiveLabel);
 
+number_of_predictions = size(pred3,1);
+positive_predictions  = true_positives + false_positives;
+negative_predictions  = true_negatives + false_negatives;
+positive_predictions_percentage = double(positive_predictions) / double(number_of_predictions) * 100;
+negative_predictions_percentage = double(negative_predictions) / double(number_of_predictions) * 100;
+
 % precision = true_positives / predicted_positives;
 precision = true_positives / (true_positives + false_positives);
 
@@ -112,7 +132,12 @@ recall    = true_positives / (true_positives + false_negatives);
 
 fscore    = 2 * (precision * recall) / (precision + recall);
 
-fprintf('Number of Predictions:    %d\n', size(pred3,1));
+fprintf('Number of Predictions:     %d\n', number_of_predictions);
+fprintf('Positive  Predictions:     %d\n', positive_predictions);
+fprintf('Negative  Predictions:     %d\n', negative_predictions);
+fprintf('Positive  Predictions:     %f PER CENT\n', positive_predictions_percentage);
+fprintf('Negative  Predictions:     %f PER CENT\n', negative_predictions_percentage);
+
 fprintf('True Positives:           %d\n', true_positives);
 fprintf('True Negatives:           %d\n', true_negatives);
 fprintf('False Positives:          %d\n', false_positives);
@@ -121,3 +146,24 @@ fprintf('False Negatives:          %d\n', false_negatives);
 fprintf('Precision:                %f\n', precision);
 fprintf('Recall:                   %f\n', recall);
 fprintf('F-Score:                  %f\n', fscore);
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Write the indices for
+% (1) false negatives
+% (2) false positives
+% to CSV files for analysis of bad predictions.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+indices_of_actual_negatives    = find(ytest==1);
+indices_of_predicted_negatives = find(pred3==1);
+indices_of_true_negatives      = intersect(indices_of_predicted_negatives, indices_of_actual_negatives);
+indices_of_false_negatives     = setdiff(indices_of_predicted_negatives, indices_of_true_negatives);
+
+indices_of_actual_positives    = find(ytest==2);
+indices_of_predicted_positives = find(pred3==2);
+indices_of_true_positives      = intersect(indices_of_predicted_positives, indices_of_actual_positives);
+indices_of_false_positives     = setdiff(indices_of_predicted_positives, indices_of_true_positives);
+
+csvwrite(testSetFalseNegativesCsvFile, indices_of_false_negatives);
+csvwrite(testSetFalsePostivesCsvFile, indices_of_false_positives);
