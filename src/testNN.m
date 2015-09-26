@@ -155,15 +155,15 @@ fprintf('F-Score:                  %f\n', fscore);
 % to CSV files for analysis of bad predictions.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-indices_of_actual_negatives    = find(ytest==1);
-indices_of_predicted_negatives = find(pred3==1);
-indices_of_true_negatives      = intersect(indices_of_predicted_negatives, indices_of_actual_negatives);
-indices_of_false_negatives     = setdiff(indices_of_predicted_negatives, indices_of_true_negatives);
+%indices_of_actual_negatives    = find(ytest==1);
+%indices_of_predicted_negatives = find(pred3==1);
+%indices_of_true_negatives      = intersect(indices_of_predicted_negatives, indices_of_actual_negatives);
+%indices_of_false_negatives     = setdiff(indices_of_predicted_negatives, indices_of_true_negatives);
 
-indices_of_actual_positives    = find(ytest==2);
-indices_of_predicted_positives = find(pred3==2);
-indices_of_true_positives      = intersect(indices_of_predicted_positives, indices_of_actual_positives);
-indices_of_false_positives     = setdiff(indices_of_predicted_positives, indices_of_true_positives);
+%indices_of_actual_positives    = find(ytest==2);
+%indices_of_predicted_positives = find(pred3==2);
+%indices_of_true_positives      = intersect(indices_of_predicted_positives, indices_of_actual_positives);
+%indices_of_false_positives     = setdiff(indices_of_predicted_positives, indices_of_true_positives);
 
-csvwrite(testSetFalseNegativesCsvFile, indices_of_false_negatives);
-csvwrite(testSetFalsePostivesCsvFile, indices_of_false_positives);
+%csvwrite(testSetFalseNegativesCsvFile, indices_of_false_negatives);
+%csvwrite(testSetFalsePostivesCsvFile, indices_of_false_positives);

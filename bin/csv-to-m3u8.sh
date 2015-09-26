@@ -19,18 +19,19 @@
 ################################################################################
 
 if [ "$#" -ne 1 ]; then
-    echo "Usage: csv-to-mu38 infile.csv"
-    exit
+  echo "Usage: csv-to-mu38 infile.csv"
+  exit
 fi
 
 infile=$1
 extension="${infile##*.}"
 if [ "$extension" != "csv" ]; then
-    echo "infile must have the csv extension"
+  echo "infile must have the csv extension"
 fi
 
 ################################################################################
-# generated m3u8 file will have the same name as the input file but a different extension
+# generated m3u8 file will have the same name as the input file but a
+# different extension
 # Example:
 #   infile=experiment.csv
 #   outfile=experiment.m3u8
@@ -48,15 +49,16 @@ pathToAllClips="/Users/alexryan/Music/iTunes/iTunes Media/Music/Unknown Artist/U
 # Remove the header
 echo "$(tail -n +2 $infile)" > $infile
 
+# Extract the file names of the the audio clips
 cat $infile | cut -d ',' -f1 > clipNamesOnly.dat
 
-#sed 's/^.*/i ${startingToken}/' clipNamesOnly.dat > temp1.dat 
-
+# Generate the meat of the .m3u8 file
 rm temp1.dat 2> /dev/null
 cat clipNamesOnly.dat | while read line; do
   printf  "${startingToken}${line} - \n${pathToAllClips}${line}.mp3\n" >> temp1.dat
 done
-    
+
+# Add the mandatory m3u8 header
 sed "1i ${header}" temp1.dat > $outfile
 
 # Clean up temporary files

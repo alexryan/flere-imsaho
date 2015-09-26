@@ -18,17 +18,17 @@ close all; clc
 % READING ...
 weightsMatLabFile            = [getenv("FLERE_IMSAHO") "/data/matlab/flere-imsaho-weights.mat"];
 
-%trainingSetCsvFile   = [getenv("FLERE_IMSAHO") "/data/matlab/training-set.csv"];
-%validationSetCsvFile = [getenv("FLERE_IMSAHO") "/data/matlab/validation-set.csv"];
+trainingSetCsvFile   = [getenv("FLERE_IMSAHO") "/data/matlab/training-set.csv"];
+validationSetCsvFile = [getenv("FLERE_IMSAHO") "/data/matlab/validation-set.csv"];
 testSetCsvFile       = [getenv("FLERE_IMSAHO") "/data/matlab/test-set.csv"];
 
 %matlabTrainingFile   = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-train.mat");
 %matlabValidationFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-val.mat");
-matlabTestFile       = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-test.mat");
+%matlabTestFile       = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-test.mat");
 
 % WRITING ...
-%trainingSetPredictionsCsvFile    = [getenv("FLERE_IMSAHO") "/data/matlab/training-set-predictions.csv"];
-%validationSetPredictionsCsvFile  = [getenv("FLERE_IMSAHO") "/data/matlab/validation-set-predictions.csv"];
+trainingSetPredictionsCsvFile    = [getenv("FLERE_IMSAHO") "/data/matlab/training-set-predictions.csv"];
+validationSetPredictionsCsvFile  = [getenv("FLERE_IMSAHO") "/data/matlab/validation-set-predictions.csv"];
 testSetPredictionsCsvFile        = [getenv("FLERE_IMSAHO") "/data/matlab/test-set-predictions.csv"];
 
 
@@ -51,14 +51,12 @@ global ytest;
 % variables Theta1 and Theta2 should now contain the weights
 load(weightsMatLabFile);
 
-%pred1 = predict(Theta1, Theta2, Xtrain);
-%pred2 = predict(Theta1, Theta2, Xval);
+[pTrain pTrainProb1 pTrainProb2] = predict(Theta1, Theta2, Xtrain);
+[pVal pValProb1 pValProb2]       = predict(Theta1, Theta2, Xval);
+[pTest pTestProb1 pTestProb2 ]   = predict(Theta1, Theta2, Xtest);
 
-%predictions = zeros(size(Xtest,1));
-[pred3 p1 p2 ] = predict(Theta1, Theta2, Xtest);
-
-%fprintf('Training Set Accuracy:    %f\n', mean(double(pred1 == ytrain)) * 100);
-%fprintf('Validation Set Accuracy:  %f\n', mean(double(pred2 == yval)) * 100);
+fprintf('Training Set Accuracy:    %f\n', mean(double(pTrain == ytrain)) * 100);
+fprintf('Validation Set Accuracy:  %f\n', mean(double(pVal == yval)) * 100);
 fprintf('Test Set Accuracy:        %f\n', mean(double(pred3 == ytest)) * 100);
 
 
@@ -70,7 +68,13 @@ fprintf('Test Set Accuracy:        %f\n', mean(double(pred3 == ytest)) * 100);
 % > The probability of class 2 (floating point number)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-printf("testSetPrecitions  = %s\n", testSetPredictionsCsvFile);
-csvwrite(testSetPredictionsCsvFile, [pred3 p1 p2]);
+printf("  trainingSetPrecitions = %s\n", trainingSetPredictionsCsvFile);
+csvwrite(trainingSetPredictionsCsvFile, [pTrain pTrainProb1 pTrainProb2]);
+
+printf("validationSetPrecitions = %s\n", validationSetPredictionsCsvFile);
+csvwrite(validationSetPredictionsCsvFile, [pVal pValProb1 pValProb2]);
+
+printf("      testSetPrecitions = %s\n", testSetPredictionsCsvFile);
+csvwrite(testSetPredictionsCsvFile, [pTest pTestProb1 pTestProb2]);
 
 

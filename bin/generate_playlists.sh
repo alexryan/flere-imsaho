@@ -18,10 +18,21 @@
 
 cd $FLERE_IMSAHO/data/matlab
 
-csv-to-m3u8.sh flere-imsaho-test-set-false-negatives.csv
-csv-to-m3u8.sh flere-imsaho-test-set-false-positives.csv
-csv-to-m3u8.sh flere-imsaho-test-set-true-negatives.csv
-csv-to-m3u8.sh flere-imsaho-test-set-true-positives.csv
+csv-to-m3u8.sh flere-imsaho-training-set-false-negatives.csv
+csv-to-m3u8.sh flere-imsaho-training-set-false-positives.csv
+csv-to-m3u8.sh flere-imsaho-training-set-true-negatives.csv
+csv-to-m3u8.sh flere-imsaho-training-set-true-positives.csv
+
+csv-to-m3u8.sh flere-imsaho-validation-set-false-negatives.csv
+csv-to-m3u8.sh flere-imsaho-validation-set-false-positives.csv
+csv-to-m3u8.sh flere-imsaho-validation-set-true-negatives.csv
+csv-to-m3u8.sh flere-imsaho-validation-set-true-positives.csv
+
+#csv-to-m3u8.sh flere-imsaho-test-set-false-negatives.csv
+#csv-to-m3u8.sh flere-imsaho-test-set-false-positives.csv
+#csv-to-m3u8.sh flere-imsaho-test-set-true-negatives.csv
+#csv-to-m3u8.sh flere-imsaho-test-set-true-positives.csv
+
 
 
 
