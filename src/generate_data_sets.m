@@ -81,7 +81,7 @@ clear ; close all; clc
 % and output files
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-csvFile              = [getenv("FLERE_IMSAHO") "/data/audio/flere-imsaho.csv"];
+csvFile              = [getenv("FLERE_IMSAHO") "/data/playlists/flere-imsaho.csv"];
 path2RawSongFiles    = [getenv("FLERE_IMSAHO") "/data/audio/clips"];
 
 trainingSetCsvFile   = [getenv("FLERE_IMSAHO") "/data/matlab/training-set.csv"];

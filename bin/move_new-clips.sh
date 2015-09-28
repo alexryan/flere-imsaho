@@ -18,18 +18,20 @@ numberOfFilesBeforeInTarget=$(ls -l $targetDir | wc -l)
 
 cd $sourceDir
 
-SAVEIFS=$IFS
-IFS=$(echo -en "\n\b")
+#SAVEIFS=$IFS
+#IFS=$(echo -en "\n\b")
+#
+#FILES=$(find -name "*")
+#
+#for file in $FILES
+#do
+#  mv ${file} $targetDir
+#done
+#
+#IFS=$SAVEIFS
 
-FILES=$(find -name "*")
-
-for file in $FILES
-do
-  mv ${file} $targetDir
-done
-
-IFS=$SAVEIFS
-
+# This is faster!!!
+find . -name "*" -maxdepth 1 -exec mv -t $targetDir {} +
 
 ################################################################################
 # echo stats

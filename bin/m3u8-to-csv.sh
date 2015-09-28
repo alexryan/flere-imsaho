@@ -45,5 +45,5 @@ cat temp3.dat | sed s/^#EXT.*// > temp4.dat
 sed  '/^$/d' temp4.dat > $outfile
 
 # Clean up temporary files
-#rm temp*.dat
+rm temp*.dat
 
