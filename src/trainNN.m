@@ -19,7 +19,7 @@ m = size(Xtrain, 1);
 
 %% Setup the parameters you will use for this exercise
 input_layer_size  = size(Xtrain,2);  % 1 sec clip from song; sampling rate = 1000Hz
-hidden_layer_size = 10;              % number of units in the hidden layer
+hidden_layer_size = 5;               % number of units in the hidden layer
 num_labels = 2;                      % 2 labels: {1,2}   
 
 %fprintf('\nInitializing Neural Network Parameters ...\n')
@@ -46,9 +46,8 @@ initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
 fprintf('\nTraining the neural net ... \n');
 
 options = optimset('MaxIter', 200);
-%lambda=0.0028;
-%lambda=3;
-lambda=0;
+lambda=0;;
+
 
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) nnCostFunction(p, ...

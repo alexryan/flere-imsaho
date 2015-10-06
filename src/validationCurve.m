@@ -11,12 +11,12 @@ function [lambda_vec, error_train, error_val] = ...
 
   % Selected values of lambda
   
-%lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10];
+lambda_vec = [0 0.001 0.003 0.01 0.03 0.1 0.3 1 3 10];
   
-min = 1;
-max = 4;
-interval = (max-min)/10;
-lambda_vec = min:interval:max;
+%min = 2;
+%max = 6;
+%interval = (max-min)/10;
+%lambda_vec = min:interval:max;
 
 error_train = zeros(length(lambda_vec), 1);
 error_val = zeros(length(lambda_vec), 1);
@@ -46,7 +46,7 @@ Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
 initial_nn_params = [Theta1(:) ; Theta2(:)];
 
 % number of iterations for fminuncg?
-options = optimset('MaxIter', 10);
+options = optimset('MaxIter', 50);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,7 +78,7 @@ for i = 1:length(lambda_vec)
   tic;
   [nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
   timeElapsed = toc;
-  printf("\nTime to train: %d seconds\n", timeElapsed);
+  printf("Time to train: %d seconds\n", timeElapsed);
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   % Calculate the error on the training set

@@ -18,18 +18,18 @@ close all; clc
 % READING ...
 weightsMatLabFile            = [getenv("FLERE_IMSAHO") "/data/matlab/flere-imsaho-weights.mat"];
 
-trainingSetCsvFile   = [getenv("FLERE_IMSAHO") "/data/matlab/training-set.csv"];
-validationSetCsvFile = [getenv("FLERE_IMSAHO") "/data/matlab/validation-set.csv"];
-testSetCsvFile       = [getenv("FLERE_IMSAHO") "/data/matlab/test-set.csv"];
+trainingSetCsvFile   = [getenv("FLERE_IMSAHO") "/data/playlists/output/training-set.csv"];
+validationSetCsvFile = [getenv("FLERE_IMSAHO") "/data/playlists/output/validation-set.csv"];
+testSetCsvFile       = [getenv("FLERE_IMSAHO") "/data/playlists/output/test-set.csv"];
 
 %matlabTrainingFile   = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-train.mat");
 %matlabValidationFile = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-val.mat");
 %matlabTestFile       = fullfile(getenv("FLERE_IMSAHO"), "data/matlab", "flere-imsaho-test.mat");
 
 % WRITING ...
-trainingSetPredictionsCsvFile    = [getenv("FLERE_IMSAHO") "/data/matlab/training-set-predictions.csv"];
-validationSetPredictionsCsvFile  = [getenv("FLERE_IMSAHO") "/data/matlab/validation-set-predictions.csv"];
-testSetPredictionsCsvFile        = [getenv("FLERE_IMSAHO") "/data/matlab/test-set-predictions.csv"];
+trainingSetPredictionsCsvFile    = [getenv("FLERE_IMSAHO") "/data/playlists/output/training-set-predictions.csv"];
+validationSetPredictionsCsvFile  = [getenv("FLERE_IMSAHO") "/data/playlists/output/validation-set-predictions.csv"];
+testSetPredictionsCsvFile        = [getenv("FLERE_IMSAHO") "/data/playlists/output/test-set-predictions.csv"];
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,7 +57,7 @@ load(weightsMatLabFile);
 
 fprintf('Training Set Accuracy:    %f\n', mean(double(pTrain == ytrain)) * 100);
 fprintf('Validation Set Accuracy:  %f\n', mean(double(pVal == yval)) * 100);
-fprintf('Test Set Accuracy:        %f\n', mean(double(pred3 == ytest)) * 100);
+fprintf('Test Set Accuracy:        %f\n', mean(double(pTest == ytest)) * 100);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -124,6 +124,11 @@ negative_predictions  = true_negatives + false_negatives;
 positive_predictions_percentage = double(positive_predictions) / double(number_of_predictions) * 100;
 negative_predictions_percentage = double(negative_predictions) / double(number_of_predictions) * 100;
 
+true_positives_percent  = true_positives / number_of_predictions * 100;
+true_negatives_percent  = true_negatives / number_of_predictions * 100;
+false_positives_percent = false_positives / number_of_predictions * 100;
+false_negatives_percent = false_negatives / number_of_predictions * 100;
+
 % precision = true_positives / predicted_positives;
 precision = true_positives / (true_positives + false_positives);
 
@@ -132,16 +137,16 @@ recall    = true_positives / (true_positives + false_negatives);
 
 fscore    = 2 * (precision * recall) / (precision + recall);
 
-fprintf('Number of Predictions:     %d\n', number_of_predictions);
-fprintf('Positive  Predictions:     %d\n', positive_predictions);
-fprintf('Negative  Predictions:     %d\n', negative_predictions);
-fprintf('Positive  Predictions:     %f PER CENT\n', positive_predictions_percentage);
-fprintf('Negative  Predictions:     %f PER CENT\n', negative_predictions_percentage);
+fprintf('Number of Predictions:    %d \n', number_of_predictions);
+fprintf('Positive  Predictions:    %4d => %4.1f %%\n', positive_predictions, positive_predictions_percentage);
+fprintf('Negative  Predictions:    %4d => %4.1f %%\n', negative_predictions, negative_predictions_percentage);
+%fprintf('Positive  Predictions:     %6.1f %%\n', positive_predictions_percentage);
+%fprintf('Negative  Predictions:     %6.1f %%\n', negative_predictions_percentage);
 
-fprintf('True Positives:           %d\n', true_positives);
-fprintf('True Negatives:           %d\n', true_negatives);
-fprintf('False Positives:          %d\n', false_positives);
-fprintf('False Negatives:          %d\n', false_negatives);
+fprintf('True Positives:           %4d => %4.1f %%\n', true_positives, true_positives_percent);
+fprintf('True Negatives:           %4d => %4.1f %%\n', true_negatives, true_negatives_percent);
+fprintf('False Positives:          %4d => %4.1f %%\n', false_positives, false_positives_percent);
+fprintf('False Negatives:          %4d => %4.1f %%\n', false_negatives, false_negatives_percent);
 
 fprintf('Precision:                %f\n', precision);
 fprintf('Recall:                   %f\n', recall);

@@ -155,7 +155,7 @@ for i = 1:length(songs)
 
   if (randomNumber < 80)
     %printf("%d goes to the training set\n", i);
-    Xtrain(trainingIndex,:) = songVector(101:900,1);
+    Xtrain(trainingIndex,:) = songVector(101:600,1);
     ytrain(trainingIndex,1) = labels(i);
 
     trainingSetCsv{trainingIndex,1} = songs{i,1};
@@ -171,7 +171,7 @@ for i = 1:length(songs)
     
   elseif (randomNumber > 90)
     %printf("%d goes to the cross validation set\n", i);
-    Xval(validationIndex,:) = songVector(101:900,1);
+    Xval(validationIndex,:) = songVector(101:600,1);
     yval(validationIndex,1) = labels(i);
 
     validationSetCsv{validationIndex,1} = songs{i,1};
@@ -187,7 +187,7 @@ for i = 1:length(songs)
     
   else
     %printf("%d goes to the test set\n", i);
-    Xtest(testIndex,:) = songVector(101:900,1);
+    Xtest(testIndex,:) = songVector(101:600,1);
     ytest(testIndex,1) = labels(i);
 
     testSetCsv{testIndex,1} = songs{i,1};
