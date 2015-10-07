@@ -114,7 +114,7 @@ for i=1:20
     %y = sin(x);
     h=figure;
     %plot(x,y);
-    y=matrix(index(1),:);
+    y=matrix(index(i),:);
     x=1:length(y);
     plot(x,y);
     title(clipName{i}, "fontsize", 12); 

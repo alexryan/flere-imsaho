@@ -4,9 +4,13 @@
 *.mp3
 *.m4a
 *~
+*.png
+*-with-indices.csv
+*.old
 *.dat
 *.supported
 data/audio/tracks/
 octave-workspace
 experiment/
-
+*.time-machine
+*.withoutQuotes

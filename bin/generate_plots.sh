@@ -6,14 +6,14 @@
 matrix="Xtest"
 rows="/Users/alexryan/alpine/git/flere-imsaho/data/playlists/output/test-set-true-positives-with-indices.csv"
 directory="/Users/alexryan/alpine/git/flere-imsaho/data/playlists/output/test-set/true-positives"
-#$FLERE_IMSAHO/src/generate_plots.m $matrix $rows $directory
+$FLERE_IMSAHO/src/generate_plots.m $matrix $rows $directory
 
 ################################################################################
 # test-set-true-negatives
 ################################################################################
 rows="/Users/alexryan/alpine/git/flere-imsaho/data/playlists/output/test-set-true-negatives-with-indices.csv"
 directory="/Users/alexryan/alpine/git/flere-imsaho/data/playlists/output/test-set/true-negatives"
-#$FLERE_IMSAHO/src/generate_plots.m $matrix $rows $directory
+$FLERE_IMSAHO/src/generate_plots.m $matrix $rows $directory
 
 ################################################################################
 # test-set-false-positives
