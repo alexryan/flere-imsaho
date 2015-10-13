@@ -32,51 +32,15 @@ functionDir = [getenv("FLERE_IMSAHO") "/src"];
 fprintf("functionDir = %s\n", functionDir);
 addpath (functionDir);
 
-fprintf("hello world 1\n");
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Process the command line arguments
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%args = argv ();
-
-%if (length(args) != 3)
-%  fprintf("expected 3 paramaters. got this many: %d\n", length(args));
-%  break;
-%end
-
-%for k=1:length(args)
-%  arg=args{k};
-%  fprintf("%d:%s\n", k, arg);
-%end
-
-%mp3Directory      = args{1};
-%pngDirectory      = args{2};
-%weightsMatlabFile = args{3};
-
-%fprintf(" mp3Directory: %s\n", mp3Directory);
-%fprintf(" pngDirectory: %s\n", pngDirectory);
-%fprintf(" weightsMatlabFile: %s\n", weightsMatlabFile);
-
-fprintf("hello world 2\n");
-
 mp3File           = [getenv("MP3_DIR") "/" getenv("MP3_FILE")];
-fprintf("hello world 3\n");
-
 rawFile           = [getenv("MP3_DIR") "/" getenv("RAW_FILE")];
-fprintf("hello world 4\n");
-
 pngFile           = [getenv("PNG_DIR") "/" getenv("PNG_FILE")];
-fprintf("hello world 5\n");
-
 weightsMatlabFile = [getenv("WEIGHTS")];
-fprintf("hello world 6\n");
-
 rawFileNoExtension = rawFile(1:end-4);
-
-fprintf("hello world 7\n");
-
 
 fprintf("           mp3File: %s\n", mp3File);
 fprintf("           rawFile: %s\n", rawFile);
@@ -84,15 +48,7 @@ fprintf("           rawFile: %s\n", rawFileNoExtension);
 fprintf("           pngFile: %s\n", pngFile);
 fprintf(" weightsMatlabFile: %s\n", weightsMatlabFile);
 
-
 signalsPerClip=500;
-
-%% Initialization
-%clear ; close all; clc
-
-%rawFile = [getenv("FLERE_IMSAHO") "/data/audio/user/userfile.mono-sr0500-ss16"];
-%rawFile = [mp3Directory "/userfile.mono-sr0500-ss16"];
-%printf("rawFile=%s\n", rawFile);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Load the data from the RAW audio file
@@ -152,7 +108,6 @@ num_labels        = 2;
 % variables Theta1 and Theta2 should now contain the weights
 fprintf('\nLoading da magical Neural Network Parameters ...\n')
 
-%load('/Users/alexryan/alpine/git/flere-imsaho/data/matlab/flere-imsaho-weights.mat');
 load(weightsMatlabFile);
 
 fprintf(" dimensions of Theta1: %d x %d\n", size(Theta1,1), size(Theta1,2));
@@ -208,7 +163,7 @@ hold on;
 scatter(lowIndicesScaled, lowValues, 'filled');
 scatter(highIndicesScaled, highValues);
 
-title("Song Analysis", "fontsize", 12);
+title(getenv("PNG_FILE"), "fontsize", 12);
 
 print(h, pngFile, '-dpng');
 

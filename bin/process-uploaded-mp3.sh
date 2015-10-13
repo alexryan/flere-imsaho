@@ -100,7 +100,9 @@ cd $MP3_DIR
 
 #/usr/local/bin/sox userfile.mp3 -c 1 -r 500 --bits 16 userfile.mono-sr0500-ss16.raw
 #sox userfile.mp3 --channels 1 -r 500 --bits 16 userfile.mono-sr0500-ss16.raw
-sox userfile.mp3 --channels 1 -r 500 --bits 16 $RAW_FILE
+#sox userfile.mp3 --channels 1 -r 500 --bits 16 $RAW_FILE
+sox $MP3_FILE --channels 1 -r 500 --bits 16 $RAW_FILE
+
 
 echo "Did sox run"
 #ls -lF *.raw
@@ -115,7 +117,9 @@ OCTAVE_PATH=$FLERE_IMSAHO/src
 
 echo "running the octave script ..."
 #$FLERE_IMSAHO/src/process_full_mp3.m $MP3_DIR $PNG_DIR $WEIGHTS
-$FLERE_IMSAHO/src/process_full_mp3.m
+#$FLERE_IMSAHO/src/process_full_mp3.m
+octave $FLERE_IMSAHO/src/process_full_mp3.m
+
 
 echo "done"
 
