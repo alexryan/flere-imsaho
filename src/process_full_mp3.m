@@ -1,4 +1,3 @@
-#!/usr/bin/env octave -qf
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % process_full_mp3.m
@@ -36,17 +35,19 @@ addpath (functionDir);
 % Process the command line arguments
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-mp3File           = [getenv("MP3_DIR") "/" getenv("MP3_FILE")];
-rawFile           = [getenv("MP3_DIR") "/" getenv("RAW_FILE")];
-pngFile           = [getenv("PNG_DIR") "/" getenv("PNG_FILE")];
-weightsMatlabFile = [getenv("WEIGHTS")];
+mp3File            = [getenv("MP3_DIR") "/" getenv("MP3_FILE")];
+rawFile            = [getenv("MP3_DIR") "/" getenv("RAW_FILE")];
+pngFile            = [getenv("PNG_DIR") "/" getenv("PNG_FILE")];
+weightsMatlabFile  = [getenv("WEIGHTS")];
 rawFileNoExtension = rawFile(1:end-4);
+csvFile            = [getenv("PNG_DIR") "/" getenv("MP3_FILE") ".csv"];
 
 fprintf("           mp3File: %s\n", mp3File);
 fprintf("           rawFile: %s\n", rawFile);
 fprintf("           rawFile: %s\n", rawFileNoExtension);
 fprintf("           pngFile: %s\n", pngFile);
 fprintf(" weightsMatlabFile: %s\n", weightsMatlabFile);
+fprintf("           csvFile: %s\n", csvFile);
 
 signalsPerClip=500;
 
@@ -156,16 +157,44 @@ highIndices       = find(pred1==2);
 highIndicesScaled = highIndices * signalsPerClip;
 highValues        = [ones(size(highIndices,1),1) * 0.5];
 
+fprintf("debug 1\n");
 h=figure;
+fprintf("debug 2\n");
 
 plot(1:size(normalizedSong), normalizedSong, 'Color', 'green', 'LineWidth', 0.01);
 hold on;
 scatter(lowIndicesScaled, lowValues, 'filled');
 scatter(highIndicesScaled, highValues);
 
+fprintf("debug 5\n");
 title(getenv("PNG_FILE"), "fontsize", 12);
 
+fprintf("debug 6\n");
 print(h, pngFile, '-dpng');
+fprintf("debug 7\n");
+%close h;
+fprintf("debug 8\n");
 
-fprintf("PNG Written: %s\n", imageFile);
+fprintf("PNG Written: %s\n", pngFile);
+fprintf("debug 9\n");
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Calculate stats and store the results in a test file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%headers = {'A','B','C'};
+headers = {'low','high','percent_low','percent_high'};
+%data = [1,2,3;4,5,6];
+low   = size(lowIndices,1);
+high  = size(highIndices,1);
+total = low + high;
+pLow  = low / total;
+pHigh = high / total;
+
+data = [low high pLow pHigh];
+%csvwrite('test.csv',data);
+
+fprintf("Writing: %s\n", csvFile);
+%csvwrite(csvFile, data);
+%csvwrite(csvFile, data);
+csvwrite_with_headers(csvFile, data, headers);
