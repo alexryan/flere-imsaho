@@ -24,6 +24,8 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+tic;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Enable the calling of our functions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -40,7 +42,7 @@ rawFile            = [getenv("MP3_DIR") "/" getenv("RAW_FILE")];
 pngFile            = [getenv("PNG_DIR") "/" getenv("PNG_FILE")];
 weightsMatlabFile  = [getenv("WEIGHTS")];
 rawFileNoExtension = rawFile(1:end-4);
-csvFile            = [getenv("PNG_DIR") "/" getenv("MP3_FILE") ".csv"];
+csvFile            = [getenv("MP3_DIR") "/" getenv("MP3_FILE") ".csv"];
 
 fprintf("           mp3File: %s\n", mp3File);
 fprintf("           rawFile: %s\n", rawFile);
@@ -48,6 +50,8 @@ fprintf("           rawFile: %s\n", rawFileNoExtension);
 fprintf("           pngFile: %s\n", pngFile);
 fprintf(" weightsMatlabFile: %s\n", weightsMatlabFile);
 fprintf("           csvFile: %s\n", csvFile);
+
+time2Start = toc;
 
 signalsPerClip=500;
 
@@ -57,43 +61,51 @@ signalsPerClip=500;
 % via a column vectotor called "songVector"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+tic;
+
 songVector = loadaudio(rawFileNoExtension, 'raw', 16);
 printf("size(songVector,1):\n");
 disp(size(songVector,1));
 
-fprintf("dimension of songVector:\n");
-disp(size(songVector));
+%fprintf("dimensions of songVector:\n");
+%disp(size(songVector));
 
-fprintf("sample data from songVector:\n");
-for i = 5:8
-  startOfSample = i * signalsPerClip;
-  endOfSample   = startOfSample + 10;
-  fprintf("songVector(%d:%d,1): \n", startOfSample, endOfSample);
-  disp(songVector(startOfSample:endOfSample,1));
-end
+%fprintf("sample data from songVector:\n");
+%for i = 5:8
+%  startOfSample = i * signalsPerClip;
+%  endOfSample   = startOfSample + 10;
+%  fprintf("songVector(%d:%d,1): \n", startOfSample, endOfSample);
+%  disp(songVector(startOfSample:endOfSample,1));
+%end
+
+time2LoadAudio = toc;
 
 number_of_clips = idivide(size(songVector,1), signalsPerClip);
 
 printf("number_of_clips:\n");
 disp(number_of_clips);
 
+tic;
+
 startOfClip = 1;
 endOfClip   = startOfClip + signalsPerClip - 1;
 for i = 1:number_of_clips
-  fprintf("%d: start:%d, end:%d\n", i, startOfClip, endOfClip);
+  %fprintf("%d: start:%d, end:%d\n", i, startOfClip, endOfClip);
   X(i,1:signalsPerClip) = songVector(startOfClip:endOfClip,1);
   startOfClip = endOfClip + 1;
   endOfClip   = startOfClip + signalsPerClip - 1;
 end
 
+timeOfClipConstruction = toc;
+
 % Did it work? Size matters! 
 fprintf(" dimensions of X: %d x %d\n", size(X,1), size(X,2));
 
-fprintf("sample data from X:\n");
-for i = 5:8
-  fprintf("X(%d,1:10): \n", i);
-  disp(X(i,1:10));
-end
+%fprintf("sample data from X:\n");
+%for i = 5:8
+%  fprintf("X(%d,1:10): \n", i);
+%  disp(X(i,1:10));
+%end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -109,6 +121,7 @@ num_labels        = 2;
 % variables Theta1 and Theta2 should now contain the weights
 fprintf('\nLoading da magical Neural Network Parameters ...\n')
 
+tic;
 load(weightsMatlabFile);
 
 fprintf(" dimensions of Theta1: %d x %d\n", size(Theta1,1), size(Theta1,2));
@@ -117,7 +130,8 @@ fprintf(" dimensions of Theta2: %d x %d\n", size(Theta2,1), size(Theta2,2));
 XNorm = featureNormalize(X);
 
 pred1 = predict(Theta1, Theta2, XNorm);
-disp(pred1');
+%disp(pred1');
+time2Predict = toc;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Persist the extracted song data to a matlab data file.
@@ -139,6 +153,8 @@ disp(pred1');
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+tic;
+
 setenv ("GNUTERM", "x11");
 %imageFile = sprintf("%03d-%05d-%s.png", i, index(i), clipName{i});
 %imageFile = [ outputDirectory "/" imageFile ];
@@ -157,44 +173,48 @@ highIndices       = find(pred1==2);
 highIndicesScaled = highIndices * signalsPerClip;
 highValues        = [ones(size(highIndices,1),1) * 0.5];
 
-fprintf("debug 1\n");
 h=figure;
-fprintf("debug 2\n");
-
 plot(1:size(normalizedSong), normalizedSong, 'Color', 'green', 'LineWidth', 0.01);
 hold on;
 scatter(lowIndicesScaled, lowValues, 'filled');
 scatter(highIndicesScaled, highValues);
-
-fprintf("debug 5\n");
 title(getenv("PNG_FILE"), "fontsize", 12);
-
-fprintf("debug 6\n");
 print(h, pngFile, '-dpng');
-fprintf("debug 7\n");
-%close h;
-fprintf("debug 8\n");
-
 fprintf("PNG Written: %s\n", pngFile);
-fprintf("debug 9\n");
+
+time2GeneratePNG = toc;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calculate stats and store the results in a test file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%headers = {'A','B','C'};
-headers = {'low','high','percent_low','percent_high'};
-%data = [1,2,3;4,5,6];
+%headers = {'low','high','percent_low','percent_high'};
+
+tic;
+
 low   = size(lowIndices,1);
 high  = size(highIndices,1);
 total = low + high;
 pLow  = low / total;
 pHigh = high / total;
 
-data = [low high pLow pHigh];
-%csvwrite('test.csv',data);
+%data = [low high pLow pHigh];
 
 fprintf("Writing: %s\n", csvFile);
-%csvwrite(csvFile, data);
-%csvwrite(csvFile, data);
-csvwrite_with_headers(csvFile, data, headers);
+%disp(headers);
+%disp(data);
+%csvwrite_with_headers(csvFile, data, headers);
+
+fid = fopen (csvFile,'wt');
+fprintf(fid,'%s,%d,%d,%.10f,%.10f\n', getenv("MP3_FILE"),low, high, pLow, pHigh);
+fclose(fid);
+
+time2WriteCsv = toc;
+
+fprintf("             time2Start=%f\n", time2Start);
+fprintf("         time2LoadAudio=%f\n", time2LoadAudio);
+fprintf(" timeOfClipConstruction=%f\n", timeOfClipConstruction);
+fprintf("           time2Predict=%f\n", time2Predict);
+fprintf("       time2GeneratePNG=%f\n", time2GeneratePNG);
+fprintf("          time2WriteCsv=%f\n", time2WriteCsv);
+

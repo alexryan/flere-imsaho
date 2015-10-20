@@ -34,10 +34,18 @@
 #   The magical matlab file containing a set of weights (matrices) for the
 #   neural net to prcess and make predictions.
 #
+# The following software must be installed and available in the PATH:
+#   sox
+#   octave
+#   mysql
+#
+# The process owner running this script must have database credentials
+# in ~/.my.cnf
+#
 ################################################################################
 
 # Check that environment variables have been properly set
-set
+#set
 
 if [ -z "$FLERE_IMSAHO" ]; then
   printf "FLERE_IMSAHO environment variable is not set.\n"
@@ -75,6 +83,12 @@ if [ -z "$WEIGHTS" ]; then
   exit 0
 fi
 
+if [ -z "$DB_HOST" ]; then
+  printf "DB_HOST environment variable is not set.\n"
+  exit 0
+fi
+
+
 if ! type sox > /dev/null; then
   printf "sox is not accessible in PATH\n
   exit 0
@@ -91,37 +105,93 @@ fi
 # judge its intensity or valence relative to another snippet
 ################################################################################
 
-echo 'generating new audio clips ...'
+echo 'converting mp3 to raw ...'
 cd $MP3_DIR
-#rm *.raw
 
-#name=${MP3%%.mp3}
-#echo "name=$name"
-
-#/usr/local/bin/sox userfile.mp3 -c 1 -r 500 --bits 16 userfile.mono-sr0500-ss16.raw
-#sox userfile.mp3 --channels 1 -r 500 --bits 16 userfile.mono-sr0500-ss16.raw
-#sox userfile.mp3 --channels 1 -r 500 --bits 16 $RAW_FILE
+STARTTIME=$(date +%s)
 sox $MP3_FILE --channels 1 -r 500 --bits 16 $RAW_FILE
-
-
-echo "Did sox run"
-#ls -lF *.raw
+ENDTIME=$(date +%s)
+time2GenerateRawFile="$(($ENDTIME - $STARTTIME))"
+							 
+echo "generated file ..."
 ls -lF $RAW_FILE
 
 ################################################################################
 # Convert the generated RAW file to a series of predictions
 ################################################################################
 OCTAVE_PATH=$FLERE_IMSAHO/src
-##/usr/local/bin/octave --path $OCTAVE_PATH $FLERE_IMSAHO/src/process_full_mp3.m
-##octave --path $OCTAVE_PATH $FLERE_IMSAHO/src/process_full_mp3.m
 
 echo "running the octave script ..."
-#$FLERE_IMSAHO/src/process_full_mp3.m $MP3_DIR $PNG_DIR $WEIGHTS
-#$FLERE_IMSAHO/src/process_full_mp3.m
+
+STARTTIME=$(date +%s)
 octave $FLERE_IMSAHO/src/process_full_mp3.m
+ENDTIME=$(date +%s)
+time2RunOctave="$(($ENDTIME - $STARTTIME))"
 
 
-echo "done"
+################################################################################
+# Persist the data to a relational database
+################################################################################
+STARTTIME=$(date +%s)
+
+MP3_FILE_FULL_PATH="$MP3_DIR/$MP3_FILE"
+CSV_FILE_FULL_PATH="$MP3_FILE_FULL_PATH.csv"
+SQL_FILE_FULL_PATH="$MP3_FILE_FULL_PATH.sql"
+
+printf "MP3_FILE_FULL_PATH=$MP3_FILE_FULL_PATH\n"
+printf "CSV_FILE_FULL_PATH=$CSV_FILE_FULL_PATH\n"
+printf "SQL_FILE_FULL_PATH=$SQL_FILE_FULL_PATH\n"
+
+if [! -f "$CSV_FILE_FULL_PATH" ]
+  then
+  echo "PANIC! File not found: $CSV_FILE_FULL_PATH\n"
+  exit 0;
+fi
+  
+printf  "File found: $CSV_FILE_FULL_PATH\n"
+
+INSERT=$(cat $CSV_FILE_FULL_PATH | awk -F "," '{printf("insert into track (name, low, high, percent_low, percent_high) values (\x27%s\x27, \x27%d\x27, \x27%d\x27, \x27%.17g\x27, \x27%.17g\x27); \n", $1, $2, $3, $4, $5)}')
+
+#printf "INSERT=$INSERT\n"
+
+################################################################################
+# Generate an SQL file that looks something like this:
+#
+# use music;
+# INSERT INTO track (name, low, high, percent_low, percent_high)
+# VALUES ('HELLO_WORLD', '85', '97', '0.467032967032967' , '0.532967032967033');
+# SELECT LAST_INSERT_ID();
+################################################################################
+
+printf "use music;\n"                > $SQL_FILE_FULL_PATH
+printf "$INSERT\n"                  >> $SQL_FILE_FULL_PATH
+printf "SELECT LAST_INSERT_ID();\n" >> $SQL_FILE_FULL_PATH
+
+printf "$SQL_FILE_FULL_PATH:\n"
+cat $SQL_FILE_FULL_PATH
+
+ENDTIME=$(date +%s)
+time2RunGenerateSQL="$(($ENDTIME - $STARTTIME))"
 
 
+################################################################################
+# Save summary statst to a relational database
+################################################################################
 
+STARTTIME=$(date +%s)
+#DB_ID=$(mysql -N -B  < $SQL_FILE_FULL_PATH)
+DB_ID=$(mysql -N -B -h $DB_HOST -P 3306 < $SQL_FILE_FULL_PATH)
+ENDTIME=$(date +%s)
+time2ExecuteSQL="$(($ENDTIME - $STARTTIME))"
+
+#export DB_ID
+printf "DB_ID=$DB_ID\n"
+
+echo "muah hah hah"
+
+printf "time2GenerateRawFile=%f\n", "$time2GenerateRawFile"
+printf "      time2RunOctave=%f\n", "$time2RunOctave"
+printf "    time2GenerateSQL=%f\n", "$time2GenerateSQL"
+printf "     time2ExecuteSQL=%f\n", "$time2ExecuteSQL"
+
+exit $DB_ID

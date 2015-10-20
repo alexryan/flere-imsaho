@@ -15,3 +15,6 @@ octave-workspace
 experiment/
 *.time-machine
 *.withoutQuotes
+the.properties
+context.xml
+
