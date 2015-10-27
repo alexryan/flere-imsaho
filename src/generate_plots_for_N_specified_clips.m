@@ -90,6 +90,7 @@ addpath (functionDir);
 fprintf("How big is that list?");
 disp(size(clipName));
 
+numberOfPNGs2Generate = size(clipName,1);
 
 %setenv ("GNUTERM", "png")
 setenv ("GNUTERM", "x11")
@@ -104,7 +105,7 @@ myMatrix = zeros(20,500);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 tic;
-for i=1:20
+for i=1:numberOfPNGs2Generate
   fprintf("clipName=%s\n", clipName{i});
 
   rawFile = sprintf("%s.mono-sr0500-ss16", clipName{i});
@@ -147,7 +148,7 @@ myMatrix = featureNormalize(myMatrix);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 tic;
-for i=1:20
+for i=1:numberOfPNGs2Generate
   fprintf("clipName=%s\n", clipName{i});
 
   imageFile = sprintf("%s.png", clipName{i});

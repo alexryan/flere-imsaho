@@ -25,7 +25,7 @@ CREATE TABLE clip (
   UNIQUE(name)
 );
 
-CREATE TABLE voter (
+CREATE TABLE user (
   id                       BIGINT  NOT NULL AUTO_INCREMENT,
   name                     VARCHAR(128),
   PRIMARY KEY(id),
@@ -36,9 +36,13 @@ CREATE TABLE voter (
 CREATE TABLE vote (
   id                       BIGINT  NOT NULL AUTO_INCREMENT,
   time                     BIGINT  NOT NULL,
+  voter_id                 BIGINT  NOT NULL,
   clip1_id                 BIGINT  NOT NULL,
   clip2_id                 BIGINT  NOT NULL,
+  higher_arousal           SMALLINT NOT NULL,
+  higher_valence           SMALLINT NOT NULL,
   PRIMARY KEY(id),
+  FOREIGN KEY (voter_id) REFERENCES user(id),
   FOREIGN KEY (clip1_id) REFERENCES clip(id),
   FOREIGN KEY (clip2_id) REFERENCES clip(id)
 );

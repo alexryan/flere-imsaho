@@ -2,7 +2,7 @@ use music;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-LOAD DATA LOCAL INFILE '/Users/alexryan/alpine/git/flere-imsaho/data/mysql/clean.csv'
+LOAD DATA LOCAL INFILE "$FLERE_IMSAHO/data/mysql/clean.csv"
   INTO TABLE clip
 FIELDS TERMINATED BY ','
 ESCAPED BY '"'

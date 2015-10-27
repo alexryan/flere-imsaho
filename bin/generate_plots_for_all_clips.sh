@@ -30,7 +30,6 @@ sort $listOfPNGsFile -o $listOfPNGsFile
 # Get the list of audio files which do not yet have corresponding image files
 ################################################################################
 comm -23 $listOfMP3sFile $listOfPNGsFile > $listOfPNGsToGenerateFile
-
 comm -13 $listOfMP3sFile $listOfPNGsFile > $listOfMysteryPNGs
 
 
@@ -49,3 +48,20 @@ printf "numberOfPNGsToGenerate (actual):   %d\n" "$numberOfPNGsToGenerate"
 
 #head $listOfMP3sFile
 #head $listOfPNGsFile
+
+
+read -n1 -r -p "Press any key to continue..." key
+
+
+################################################################################
+# Now we have a solid list of MP3 files that do not yet have plots.
+# Now we generate plots for them.
+################################################################################
+
+export MP3_DIR="$FLERE_IMSAHO/data/audio/clips"
+export PNG_DIR="$FLERE_IMSAHO/data/audio/clips-images"
+export NEW_PNG_LIST="/tmp/new-pngs.dat"
+export MATLAB_TEMP_FILE="$FLERE_IMSAHO/data/matlab/flere-imsaho-temp.mat"
+
+octave $FLERE_IMSAHO/src/generate_plots_for_N_specified_clips.m
+
