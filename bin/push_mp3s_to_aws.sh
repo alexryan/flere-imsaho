@@ -5,7 +5,9 @@
 ################################################################################
 
 # matlab data files
-rsync --progress -exclude="*.raw" -rave "ssh -i $KEYS/music2.pem" $FLERE_IMSAHO/data/audio/clips ubuntu@music:/mnt/flere-imsaho/data/audio
+#/usr/bin/rsync --progress --exclude="*.raw" -rave "ssh -i $KEYS/music2.pem" $FLERE_IMSAHO/data/audio/clips ubuntu@music:/mnt/flere-imsaho/data/audio
+
+rsync --stats --exclude="*.raw" -rave "ssh -i $KEYS/music2.pem" $FLERE_IMSAHO/data/audio/clips ubuntu@music:/mnt/flere-imsaho/data/audio
 
 
 
